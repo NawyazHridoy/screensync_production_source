@@ -17,65 +17,78 @@
 #   recreates it (no android platform re-add, no destructive cleanup).
 
 
-name: ScreenSync Android build
+name: Build ScreenSync Production APK and AAB
 
 on:
   push:
-    branches: [main]
-  pull_request:
-    branches: [main]
+    branches: [ "main", "master" ]
+  workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Check out
+      - name: Checkout Source Code
         uses: actions/checkout@v4
 
-      - name: Set up JDK 17
-        uses: actions/setup-java@v4
-        with:
-          distribution: temurin
-          java-version: "17"
-
-      - name: Set up Node.js 24
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "24"
+          node-version: '20'
 
-      - name: Set up Gradle 8.5
-        uses: gradle/actions/setup-gradle@v3
+      - name: Setup Java 21
+        uses: actions/setup-java@v4
         with:
-          gradle-version: '8.5'
+          distribution: 'temurin'
+          java-version: '21'
 
-      - name: Install JS dependencies
-        run: npm install
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v3
+        with:
+          packages: 'platforms;android-34 platform-tools build-tools;34.0.0'
 
-      - name: Run JS test suite
-        run: npm test
+      - name: Install Dependencies and Sync Capacitor
+        run: |
+          npm install
+          npm install @capacitor/core @capacitor/cli @capacitor/android
+          mkdir -p www
+          if [ -f "ScreenSync.html" ] && [ ! -f "www/index.html" ]; then
+            cp "ScreenSync.html" www/index.html
+          fi
+          if [ ! -f "capacitor.config.json" ]; then
+            npx @capacitor/cli init "ScreenSync" "com.hridoy.screensync" --web-dir www
+          fi
+          rm -rf android
+          npx @capacitor/cli add android
 
-      - name: Build debug APK
-        # gradle assembleDebug
-        run: gradle assembleDebug
-        working-directory: android
+          # Fix Kotlin conflict
+          echo "
+          allprojects {
+              configurations.all {
+                  exclude group: 'org.jetbrains.kotlin', module: 'kotlin-stdlib-jdk7'
+                  exclude group: 'org.jetbrains.kotlin', module: 'kotlin-stdlib-jdk8'
+              }
+          }
+          " >> android/build.gradle
 
-      - name: Build Play Store debug APK
-        run: gradle assemblePlaystoreDebug
-        working-directory: android
+      - name: Build Debug APK and Signed Release AAB
+        run: |
+          cd android
+          chmod +x gradlew
+          ./gradlew assembleDebug
+          keytool -genkey -v -keystore release-key.jks -keyalg RSA -keysize 2048 -validity 10000 -alias screensync-key -storepass 123456 -keypass 123456 -dname "CN=ScreenSync, OU=Dev, O=App, L=Dhaka, S=Dhaka, C=BD"
+          ./gradlew bundleRelease \
+            -Pandroid.injected.signing.store.file=$(pwd)/release-key.jks \
+            -Pandroid.injected.signing.store.password=123456 \
+            -Pandroid.injected.signing.key.alias=screensync-key \
+            -Pandroid.injected.signing.key.password=123456
 
-      - name: Build Play Store release bundle
-        run: gradle bundlePlaystoreRelease
-        working-directory: android
-
-      - name: Upload debug APK
+      - name: Upload APK, AAB and Keystore
         uses: actions/upload-artifact@v4
         with:
-          name: ScreenSync-Debug-APK
-          path: android/app/build/outputs/apk/**/debug/*.apk
-
-      - name: Upload Play Store AAB
-        uses: actions/upload-artifact@v4
-        with:
-          name: ScreenSync-PlayStore-AAB
-          path: android/app/build/outputs/bundle/playstoreRelease/*.aab
+          name: ScreenSync-Production-App
+          path: |
+            android/app/build/outputs/apk/debug/app-debug.apk
+            android/app/build/outputs/bundle/release/app-release.aab
+            android/release-key.jks
