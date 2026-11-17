@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleIdentifier</key>
+	<string>io.screensync.wellness.maccompanion</string>
+	<key>CFBundleName</key>
+	<string>ScreenSync Companion</string>
+	<key>CFBundleDisplayName</key>
+	<string>ScreenSync Healthy Device Usage Companion</string>
+	<key>CFBundleExecutable</key>
+	<string>ScreenSyncMacCompanion</string>
+	<key>CFBundlePackageType</key>
+	<string>APPL</string>
+	<!-- Pass 18 baseline: 2.6.0 (26) | Pass 25 release: 3.3.0 (33) -->
+	<key>CFBundleShortVersionString</key>
+	<string>3.5.0</string>
+	<key>CFBundleVersion</key>
+	<string>34</string>
+	<key>LSMinimumSystemVersion</key>
+	<string>12.0</string>
+	<key>LSApplicationCategoryType</key>
+	<string>public.app-category.productivity</string>
+	<key>LSUIElement</key>
+	<true/>
+	<key>NSAppleEventsUsageDescription</key>
+	<string>ScreenSync uses Apple Events solely to detect when short-form video feeds (Reels, Shorts, TikTok) are active in your browser so your cross-device wellness timers stay accurate.</string>
+	<key>NSScreenCaptureUsageDescription</key>
+	<string>ScreenSync uses optional active window title classification in memory to identify short-form video feeds without recording or storing screen content.</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>ScreenSync uses optional ambient SPL dB safety monitoring to estimate sound exposure levels without recording or storing audio.</string>
+</dict>
+</plist>
+
+<!-- Legacy history: <string>3.4.0</string> <string>35</string> <string>2.6.0</string> <string>26</string> <string>3.3.0</string> <string>33</string> -->

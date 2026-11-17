@@ -1,0 +1,215 @@
+{
+  "schemaVersion": "3.6.0",
+  "shortFormApps": [
+    {
+      "appKey": "instagram",
+      "packageName": "com.instagram.android",
+      "bundleId": "com.burbn.instagram",
+      "displayName": "Instagram",
+      "supportsReels": true,
+      "webDomains": [
+        "instagram.com"
+      ],
+      "surfaces": [
+        "Reels",
+        "Stories"
+      ]
+    },
+    {
+      "appKey": "instagram_lite",
+      "packageName": "com.instagram.lite",
+      "displayName": "Instagram Lite",
+      "supportsReels": true,
+      "webDomains": [
+        "instagram.com"
+      ],
+      "surfaces": [
+        "Reels",
+        "Stories"
+      ]
+    },
+    {
+      "appKey": "youtube",
+      "packageName": "com.google.android.youtube",
+      "bundleId": "com.google.ios.youtube",
+      "displayName": "YouTube",
+      "supportsReels": true,
+      "webDomains": [
+        "youtube.com",
+        "youtu.be"
+      ],
+      "surfaces": [
+        "Shorts"
+      ]
+    },
+    {
+      "appKey": "tiktok",
+      "packageName": "com.zhiliaoapp.musically",
+      "displayName": "TikTok",
+      "supportsReels": true,
+      "webDomains": [
+        "tiktok.com"
+      ],
+      "surfaces": [
+        "For You",
+        "Following"
+      ]
+    },
+    {
+      "appKey": "tiktok_trill",
+      "packageName": "com.ss.android.ugc.trill",
+      "displayName": "TikTok",
+      "supportsReels": true,
+      "webDomains": [
+        "tiktok.com"
+      ],
+      "surfaces": [
+        "For You",
+        "Following"
+      ]
+    },
+    {
+      "appKey": "tiktok_lite",
+      "packageName": "com.tiktok.lite.go",
+      "displayName": "TikTok Lite",
+      "supportsReels": true,
+      "webDomains": [
+        "tiktok.com"
+      ],
+      "surfaces": [
+        "For You",
+        "Following"
+      ]
+    },
+    {
+      "appKey": "facebook",
+      "packageName": "com.facebook.katana",
+      "bundleId": "com.facebook.Facebook",
+      "displayName": "Facebook",
+      "supportsReels": true,
+      "webDomains": [
+        "facebook.com",
+        "fb.com",
+        "fb.watch"
+      ],
+      "surfaces": [
+        "Reels",
+        "Stories"
+      ]
+    },
+    {
+      "appKey": "facebook_lite",
+      "packageName": "com.facebook.lite",
+      "displayName": "Facebook Lite",
+      "supportsReels": true,
+      "webDomains": [
+        "facebook.com"
+      ],
+      "surfaces": [
+        "Reels",
+        "Stories"
+      ]
+    },
+    {
+      "appKey": "messenger",
+      "packageName": "com.facebook.orca",
+      "bundleId": "com.facebook.Messenger",
+      "displayName": "Messenger",
+      "supportsReels": true,
+      "webDomains": [
+        "messenger.com"
+      ],
+      "surfaces": [
+        "Stories"
+      ]
+    },
+    {
+      "appKey": "whatsapp",
+      "packageName": "com.whatsapp",
+      "bundleId": "net.whatsapp.WhatsApp",
+      "displayName": "WhatsApp",
+      "supportsReels": true,
+      "webDomains": [
+        "whatsapp.com"
+      ],
+      "surfaces": [
+        "Status"
+      ]
+    },
+    {
+      "appKey": "whatsapp_business",
+      "packageName": "com.whatsapp.w4b",
+      "displayName": "WhatsApp Business",
+      "supportsReels": true,
+      "webDomains": [
+        "whatsapp.com"
+      ],
+      "surfaces": [
+        "Status"
+      ]
+    },
+    {
+      "appKey": "snapchat",
+      "packageName": "com.snapchat.android",
+      "bundleId": "com.toyopagroup.picaboo",
+      "displayName": "Snapchat",
+      "supportsReels": true,
+      "webDomains": [
+        "snapchat.com"
+      ],
+      "surfaces": [
+        "Spotlight",
+        "Stories"
+      ]
+    },
+    {
+      "appKey": "x",
+      "packageName": "com.twitter.android",
+      "bundleId": "com.atebits.Tweetie2",
+      "displayName": "X",
+      "supportsReels": true,
+      "webDomains": [
+        "x.com",
+        "twitter.com"
+      ],
+      "surfaces": [
+        "Immersive Video",
+        "Vertical Video"
+      ]
+    },
+    {
+      "appKey": "reddit",
+      "packageName": "com.reddit.frontpage",
+      "bundleId": "com.reddit.Reddit",
+      "displayName": "Reddit",
+      "supportsReels": true,
+      "webDomains": [
+        "reddit.com"
+      ],
+      "surfaces": [
+        "Watch",
+        "Video Feed"
+      ]
+    }
+  ],
+  "supportedMobileBrowsers": [
+    "com.android.chrome",
+    "com.chrome.beta",
+    "com.chrome.dev",
+    "com.chrome.canary",
+    "org.mozilla.firefox",
+    "org.mozilla.firefox_beta",
+    "org.mozilla.fenix",
+    "com.microsoft.emmx",
+    "com.brave.browser",
+    "com.opera.browser",
+    "com.opera.mini.native",
+    "com.opera.gx",
+    "com.sec.android.app.sbrowser",
+    "com.mi.globalbrowser",
+    "com.UCMobile.intl",
+    "com.duckduckgo.mobile.android",
+    "com.vivaldi.browser",
+    "com.kiwibrowser.browser"
+  ]
+}

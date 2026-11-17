@@ -1,0 +1,31 @@
+name: screensync-wellness
+base: core22
+# Pass 18 baseline: version: '2.6.0'
+version: '3.5.0'
+summary: ScreenSync Healthy Device Usage & Cross-Device Reel Tracker
+description: |
+  Cross-device screen time, short-form reel/short/story tracker, mindful break reminders,
+  and focus guard companion for Linux desktops (X11 and Wayland).
+grade: stable
+confinement: strict
+
+apps:
+  screensync-wellness:
+    command: bin/screensync-companion
+    desktop: share/applications/io.screensync.wellness.desktop
+    plugs:
+      - network
+      - network-bind
+      - desktop
+      - x11
+      - wayland
+      - audio-playback
+
+parts:
+  screensync-companion:
+    plugin: dump
+    source: .
+    organize:
+      screensync_linux_companion.py: bin/screensync-companion
+      io.screensync.wellness.desktop: share/applications/io.screensync.wellness.desktop
+      io.screensync.wellness.metainfo.xml: share/metainfo/io.screensync.wellness.metainfo.xml

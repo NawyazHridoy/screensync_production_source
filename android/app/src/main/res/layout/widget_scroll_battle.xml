@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/widgetBattleRoot"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="12dp"
+    android:background="#E6111827">
+
+    <TextView
+        android:id="@+id/widgetBattleTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Scroll Battle"
+        android:textColor="#34D399"
+        android:textSize="13sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/widgetBattleStanding"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="Invite a friend to start a Scroll Battle"
+        android:textColor="#F8FAFC"
+        android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/widgetBattleRival"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:text="No rival linked"
+        android:textColor="#94A3B8"
+        android:textSize="11sp" />
+</LinearLayout>

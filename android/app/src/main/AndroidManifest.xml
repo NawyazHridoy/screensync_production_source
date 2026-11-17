@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- Required OS, Cross-Device Sync, Google Play Billing & Google PairIP License Check Permissions -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="com.android.vending.BILLING" />
+    <uses-permission android:name="com.android.vending.CHECK_LICENSE" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE" />
+    <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT" />
+    <uses-permission android:name="com.android.launcher.permission.INSTALL_SHORTCUT" />
+    <uses-permission android:name="com.android.launcher.permission.UNINSTALL_SHORTCUT" />
+    <uses-permission
+        android:name="android.permission.PACKAGE_USAGE_STATS"
+        tools:ignore="ProtectedPermissions" />
+
+    <!-- Explicitly strip all SMS, MMS, Telephony, Call Log, Camera, Microphone, Location & Contacts permissions across all OEM scanners (Task 22.3) -->
+    <uses-permission android:name="android.permission.READ_SMS" tools:node="remove" />
+    <uses-permission android:name="android.permission.SEND_SMS" tools:node="remove" />
+    <uses-permission android:name="android.permission.RECEIVE_SMS" tools:node="remove" />
+    <uses-permission android:name="android.permission.WRITE_SMS" tools:node="remove" />
+    <uses-permission android:name="android.permission.RECEIVE_MMS" tools:node="remove" />
+    <uses-permission android:name="android.permission.SEND_MMS" tools:node="remove" />
+    <uses-permission android:name="android.permission.READ_MMS" tools:node="remove" />
+    <uses-permission android:name="android.permission.WRITE_MMS" tools:node="remove" />
+    <uses-permission android:name="android.permission.BROADCAST_SMS" tools:node="remove" />
+    <uses-permission android:name="android.permission.BROADCAST_WAP_PUSH" tools:node="remove" />
+    <uses-permission android:name="android.permission.RECEIVE_WAP_PUSH" tools:node="remove" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" tools:node="remove" />
+    <uses-permission android:name="android.permission.CALL_PHONE" tools:node="remove" />
+    <uses-permission android:name="android.permission.READ_CALL_LOG" tools:node="remove" />
+    <uses-permission android:name="android.permission.WRITE_CALL_LOG" tools:node="remove" />
+    <uses-permission android:name="android.permission.CAMERA" tools:node="remove" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" tools:node="remove" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" tools:node="remove" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" tools:node="remove" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" tools:node="remove" />
+    <uses-permission android:name="android.permission.WRITE_CONTACTS" tools:node="remove" />
+
+    <!-- Tablet, Foldable & Chromebook Non-Required Faketouch Feature Only (Task 22.3: Zero Telephony/Camera/GPS features) -->
+    <uses-feature android:name="android.hardware.faketouch" android:required="false" />
+
+    <!-- Android 11+ (API 30+) Package Visibility for Installed App & Home Launcher Discovery -->
+    <queries>
+        <intent>
+            <action android:name="android.intent.action.MAIN" />
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent>
+        <!-- OEM Autostart, Battery & Background Pop-up Permission Managers (Android 11+ Package Visibility) -->
+        <package android:name="com.miui.securitycenter" />
+        <package android:name="com.miui.powerkeeper" />
+        <package android:name="com.samsung.android.sm_cn" />
+        <package android:name="com.vivo.permissionmanager" />
+        <package android:name="com.iqoo.secure" />
+        <package android:name="com.oplus.safecenter" />
+        <package android:name="com.oplus.battery" />
+        <package android:name="com.coloros.safecenter" />
+        <package android:name="com.heytap.safecenter" />
+        <package android:name="com.oneplus.security" />
+        <package android:name="com.samsung.android.lool" />
+        <package android:name="com.samsung.android.sm" />
+        <package android:name="com.hihonor.systemmanager" />
+        <package android:name="com.huawei.systemmanager" />
+        <package android:name="com.asus.mobilemanager" />
+        <package android:name="com.transsion.phonemaster" />
+        <intent>
+            <action android:name="android.intent.action.MAIN" />
+            <category android:name="android.intent.category.HOME" />
+        </intent>
+        <intent>
+            <action android:name="com.android.vending.billing.InAppBillingService.BIND" />
+        </intent>
+        <package android:name="com.android.vending" />
+        <package android:name="com.instagram.android" />
+        <package android:name="com.google.android.youtube" />
+        <package android:name="com.zhiliaoapp.musically" />
+        <package android:name="com.facebook.katana" />
+        <package android:name="com.facebook.lite" />
+        <package android:name="com.facebook.orca" />
+        <package android:name="com.whatsapp" />
+        <package android:name="com.snapchat.android" />
+        <package android:name="com.twitter.android" />
+        <package android:name="com.reddit.frontpage" />
+        <package android:name="com.whatsapp.w4b" />
+    </queries>
+
+    <!-- Part 15 Task 15.2: ScreenSyncSecureApplication delegates to com.pairip.application.Application & NativeAntiTamperGuard -->
+    <application
+        android:name="io.screensync.wellness.ScreenSyncSecureApplication"
+        android:allowBackup="false"
+        android:enableOnBackInvokedCallback="false"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:resizeableActivity="true"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="false"
+        android:networkSecurityConfig="@xml/network_security_config"
+        tools:targetApi="tiramisu">
+
+        <meta-data
+            android:name="com.google.android.play.billingclient.version"
+            android:value="7.1.1" />
+
+        <!-- Google PairIP Automatic Integrity Protection License Verification Activity (Task 15.2) -->
+        <activity
+            android:name="com.pairip.licensecheck.LicenseActivity"
+            android:exported="false" />
+
+        <!-- Main Capacitor / Native WebView Activity -->
+        <activity
+            android:name=".MainActivity"
+            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale|smallestScreenSize|screenLayout|uiMode"
+            android:enableOnBackInvokedCallback="false"
+            android:exported="true"
+            android:launchMode="singleTask"
+            android:resizeableActivity="true"
+            android:showWhenLocked="true"
+            android:turnScreenOn="true"
+            android:theme="@style/AppTheme.NoActionBarLaunch"
+            tools:targetApi="tiramisu">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="screensync" android:host="auth" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="io.screensync.wellness" android:host="auth" android:pathPrefix="/callback" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="screensync" android:host="billing" />
+            </intent-filter>
+        </activity>
+
+        <!-- ScreenSync & Reel-Counting Accessibility Service for Real-Time Short-Form Detection -->
+        <service
+            android:name=".ScreenSyncAccessibilityService"
+            android:exported="true"
+            android:stopWithTask="false"
+            android:label="@string/accessibility_service_label"
+            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE">
+            <intent-filter>
+                <action android:name="android.accessibilityservice.AccessibilityService" />
+            </intent-filter>
+            <meta-data
+                android:name="android.accessibilityservice"
+                android:resource="@xml/accessibility_service_config" />
+        </service>
+
+        <!-- Pass 5 Task 5.3 & Pass 22 Task 22.5: Auto-Start Receiver on Boot, QuickBoot, Package Update & User Present -->
+        <receiver
+            android:name=".BootCompletedReceiver"
+            android:enabled="true"
+            android:exported="true"
+            android:permission="android.permission.RECEIVE_BOOT_COMPLETED">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.QUICKBOOT_POWERON" />
+                <action android:name="com.htc.intent.action.QUICKBOOT_POWERON" />
+                <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
+                <action android:name="android.intent.action.USER_PRESENT" />
+                <action android:name="io.screensync.wellness.ACTION_KEEPALIVE_PULSE" />
+            </intent-filter>
+        </receiver>
+
+        <!-- Subsystem K & L: Package Uninstall & Timezone/Clock Change Broadcast Receiver -->
+        <receiver
+            android:name=".WellbeingRefreshScheduler$WellbeingSystemEventReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
+                <action android:name="android.intent.action.TIME_SET" />
+                <action android:name="android.intent.action.TIMEZONE_CHANGED" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.PACKAGE_REMOVED" />
+                <data android:scheme="package" />
+            </intent-filter>
+        </receiver>
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+
+        <receiver
+            android:name=".ScreenTimeGoalWidgetProvider"
+            android:exported="true"
+            android:label="ScreenSync • Screen Time">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_screen_time_info" />
+        </receiver>
+
+        <receiver
+            android:name=".ReelTrackerWidgetProvider"
+            android:exported="true"
+            android:label="ScreenSync • Reel Tracker">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_reel_tracker_info" />
+        </receiver>
+
+        <service
+            android:name=".FallbackReelsCounterService"
+            android:exported="false"
+            android:foregroundServiceType="specialUse">
+            <property
+                android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE"
+                android:value="fallback_reel_estimation" />
+        </service>
+
+        <receiver
+            android:name=".ScrollBattleWidgetProvider"
+            android:exported="true"
+            android:label="ScreenSync • Scroll Battle">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_scroll_battle_info" />
+        </receiver>
+
+        <receiver
+            android:name=".ScreenSyncBackgroundSyncReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="io.screensync.wellness.ACTION_PERIODIC_BACKGROUND_SYNC" />
+            </intent-filter>
+        </receiver>
+
+        <!-- Modular Firebase Cloud Messaging (FCM) Service & Default Channel Metadata -->
+        <service
+            android:name=".ScreenSyncFirebaseMessagingService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@mipmap/ic_launcher" />
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_channel_id"
+            android:value="screensync_daily_summary" />
+    </application>
+</manifest>

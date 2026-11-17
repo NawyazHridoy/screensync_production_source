@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=ScreenSync
+Comment=Healthy Device Usage & Cross-Device Reel Tracker
+Exec=screensync-companion
+Icon=io.screensync.wellness
+Terminal=false
+Type=Application
+Categories=Utility;GTK;Monitor;
+StartupNotify=true
+Keywords=ScreenTime;Wellbeing;Reels;Shorts;Focus;Productivity;

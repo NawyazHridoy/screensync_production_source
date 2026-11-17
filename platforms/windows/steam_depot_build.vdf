@@ -1,0 +1,12 @@
+"DepotBuildConfig"
+{
+	"DepotID" "481"
+	"ContentRoot" "."
+	"FileMapping"
+	{
+		"LocalPath" "ScreenSyncWindowsCompanion.exe"
+		"DepotPath" "."
+		"recursive" "0"
+	}
+	"FileExclusion" "*.pdb"
+}

@@ -1,0 +1,22 @@
+{
+  "version": "3.5.0",
+  "buildNumber": 35,
+  "generatedAtIso": "2026-11-16T22:50:44.564Z",
+  "sourceReadablePreserved": true,
+  "supportedPlatforms": [
+    "Android",
+    "iOS",
+    "macOS",
+    "Windows",
+    "Linux",
+    "ChromeOS"
+  ],
+  "hashes": {
+    "srcIndexHtmlSha256": "a17789ab1e85436497ecae23c1e9d5154bafa793e81c440402f6fb481ebc05dd",
+    "srcAppJsSha256": "2746c8859890a9c57352caf277c622066f7f3361b9db23678623a87b51b40f46",
+    "srcMainCssSha256": "1c32f8ea410825c966ea3558f26a091704195a28cc6ce2081ed61422ca1d2b0b",
+    "hardenedIndexHtmlSha256": "cc6a257df0bf3d4b1d3ee6994615af57012135f5341875a9a823c5bc25dd034b",
+    "hardenedAppJsSha256": "02b362067e91898beeec250abcaba45fa5de7a9b469fea75ef8a0f5dff1dcacf",
+    "hardenedMainCssSha256": "b77faaa0cec85e022c0862f60372d81abe7d1335b4c8fb2044575462fbb6df20"
+  }
+}

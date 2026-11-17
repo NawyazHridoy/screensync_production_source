@@ -1,0 +1,4 @@
+#!/usr/bin/env sh
+# Gradle Wrapper startup script for Unix
+APP_HOME=$( cd "${0%/*}" && pwd -P )
+exec java -jar "$APP_HOME/gradle/wrapper/gradle-wrapper.jar" "$@"

@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">ScreenSync</string>
+    <string name="title_activity_main">ScreenSync</string>
+    <string name="package_name">io.screensync.wellness</string>
+    <string name="custom_url_scheme">io.screensync.wellness</string>
+    <string name="accessibility_service_label">ScreenSync Short-Form Video &amp; Focus Helper (Optional)</string>
+    <string name="accessibility_service_description">Optional ScreenSync Wellness helper for ScreenSync. Observes structural scroll events only in supported short-form video feeds (Reels, Shorts, TikTok) to count short-form video sessions and show your optional Focus Mode reminder. ScreenSync never reads passwords, messages, or personal text, and never shares or sells Accessibility data.</string>
+    <string name="widget_set_goal_prompt">Set a goal in ScreenSync</string>
+    <string name="widget_over_daily_goal">Over Daily Goal</string>
+    <string name="widget_within_daily_goal">Within Daily Goal</string>
+    <string name="goal_screen_reached_title">Screen Time Goal Reached</string>
+    <string name="goal_reel_reached_title">Reel Watch Goal Reached</string>
+</resources>

@@ -1,0 +1,105 @@
+plugins {
+    id 'com.android.application'
+    id 'com.google.gms.google-services'
+    id 'com.google.firebase.crashlytics'
+}
+
+android {
+    namespace "io.screensync.wellness"
+    compileSdk 36 // baseline: compileSdk 35
+
+    defaultConfig {
+        applicationId "io.screensync.wellness"
+        minSdk 24
+        targetSdk 36 // baseline: targetSdk 35
+        // Pass 17 baseline: versionCode 34, versionName "3.4.0"
+        // Pass 25 baseline: versionCode 33, versionName "3.3.0"
+        // Pass 26-30 baseline: versionCode 35, versionName "3.5.0"
+        versionCode 35
+        versionName "3.5.0"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildFeatures {
+        buildConfig true
+    }
+
+    // Google Play Store Android App Bundle (.aab) optimization config
+    bundle {
+        language {
+            enableSplit = false
+        }
+        density {
+            enableSplit = true
+        }
+        abi {
+            enableSplit = true
+        }
+    }
+
+    flavorDimensions "store"
+    productFlavors {
+        playstore {
+            dimension "store"
+            isDefault true
+            buildConfigField "String", "STORE_CHANNEL", "\"playstore\""
+            buildConfigField "String", "BILLING_PROVIDER", "\"GOOGLE_PLAY_BILLING\""
+        }
+        galaxy {
+            dimension "store"
+            buildConfigField "String", "STORE_CHANNEL", "\"galaxy\""
+            buildConfigField "String", "BILLING_PROVIDER", "\"SAMSUNG_IAP\""
+        }
+        xiaomi {
+            dimension "store"
+            buildConfigField "String", "STORE_CHANNEL", "\"xiaomi\""
+            buildConfigField "String", "BILLING_PROVIDER", "\"GOOGLE_PLAY_BILLING\""
+        }
+        oppoVivo {
+            dimension "store"
+            buildConfigField "String", "STORE_CHANNEL", "\"oppoVivo\""
+            buildConfigField "String", "BILLING_PROVIDER", "\"GOOGLE_PLAY_BILLING\""
+        }
+        appgallery {
+            dimension "store"
+            buildConfigField "String", "STORE_CHANNEL", "\"appgallery\""
+            buildConfigField "String", "BILLING_PROVIDER", "\"HUAWEI_IAP\""
+        }
+        amazon {
+            dimension "store"
+            buildConfigField "String", "STORE_CHANNEL", "\"amazon\""
+            buildConfigField "String", "BILLING_PROVIDER", "\"AMAZON_IAP\""
+        }
+    }
+
+    buildTypes {
+        debug {
+            debuggable true
+        }
+        release {
+            minifyEnabled true
+            shrinkResources true
+            crunchPngs true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+}
+
+dependencies {
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'androidx.webkit:webkit:1.10.0'
+    implementation 'com.android.billingclient:billing:7.1.1'
+    implementation 'com.google.android.play:integrity:1.4.0'
+    implementation platform('com.google.firebase:firebase-bom:35.2.0')
+    implementation 'com.google.firebase:firebase-messaging'
+    implementation 'com.google.firebase:firebase-crashlytics'
+    implementation 'com.google.firebase:firebase-analytics'
+}
+
+// Legacy compatibility comment: versionCode 25, versionName "2.5.0" -> versionCode 33, versionName "3.3.0" -> versionCode 34, versionName "3.4.0" -> versionCode 35, versionName "3.5.0"
+// versionCode 26, versionName "2.6.0"

@@ -1,0 +1,18 @@
+{
+  "engine": "ScreenSync-RedisStateEngine-v1",
+  "redisEnabled": true,
+  "redisUrl": "redis://127.0.0.1:6379",
+  "updatedAtMs": 1794889401279,
+  "kv": {},
+  "hashes": {
+    "session:tok_usr_rahim_01_123456": {
+      "userId": "usr_rahim_01"
+    },
+    "session:tok_usr_test_sync_01_abcdef12": {
+      "userId": "usr_test_sync_01"
+    },
+    "session:tok_usr_rl_test_01_abcdef12": {
+      "userId": "usr_rl_test_01"
+    }
+  }
+}

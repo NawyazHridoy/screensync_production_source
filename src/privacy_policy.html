@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ScreenSync Privacy Policy &amp; Data Safety</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 32px 18px;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #050b18;
+      color: #e2e8f0;
+      line-height: 1.65;
+    }
+    main {
+      max-width: 780px;
+      margin: 0 auto;
+      background: #0b1730;
+      border: 1px solid rgba(56, 189, 248, 0.28);
+      border-radius: 20px;
+      padding: 28px;
+    }
+    h1 { color: #ffffff; font-size: 1.5rem; margin-top: 0; }
+    h2 { color: #38bdf8; font-size: 1.1rem; margin-top: 1.5rem; }
+    a { color: #38bdf8; }
+    .badge {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: rgba(52, 245, 166, 0.14);
+      color: #34f5a6;
+      font-size: 0.75rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+    .nav-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 18px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 14px;
+      border-radius: 999px;
+      background: rgba(56, 189, 248, 0.16);
+      border: 1px solid rgba(56, 189, 248, 0.38);
+      color: #ffffff;
+      text-decoration: none;
+      font-size: 0.82rem;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <div class="nav-bar">
+      <span class="badge">Google Play &amp; Apple App Store Compliant &bull; v3.5.0</span>
+      <a class="back-btn" href="index.html">&larr; Back to ScreenSync</a>
+    </div>
+    <h1>ScreenSync Privacy Policy &amp; Data Safety Disclosure</h1>
+    <p><strong>Effective Date:</strong> October 26, 2026 &nbsp;|&nbsp; <strong>Controller:</strong> ScreenSync Digital Wellness Project</p>
+
+    <h2>1. Local-First Data Architecture &amp; Cloud Processor</h2>
+    <p>ScreenSync stores daily screen-time metrics, hourly activity buckets, app timer settings, website domain duration aggregates, sound exposure / volume safety telemetry, and short-form video scroll counts locally on your device using SQLite and local browser storage. When you explicitly sign in with an account, encrypted cross-device synchronization is processed through our hosted Supabase PostgreSQL &amp; Realtime infrastructure (or your configured self-hosted sync server) over TLS 1.3 with Row-Level Security (<code>auth.uid() = user_id</code>).</p>
+
+    <h2>2. Categories of Telemetry Collected</h2>
+    <ul>
+      <li><strong>App &amp; Website Domain Usage Aggregates:</strong> Per-app foreground duration, daily unlock counts, and top-level website hostname durations (for example, <code>youtube.com</code> or <code>reddit.com</code>) when synced via the desktop browser extension. Full URLs with query strings, search queries, or page bodies are never stored.</li>
+      <li><strong>Short-Form Video Scroll Counts:</strong> Aggregate scroll gesture counts and active watch durations across supported short-form video feeds (YouTube Shorts, Instagram Reels, TikTok, Facebook Reels, Snapchat Spotlight, Reddit Watch, X Video, and Pinterest Watch).</li>
+      <li><strong>Sound Exposure &amp; Headphone Safety Telemetry:</strong> Aggregate decibel exposure estimates (<code>avgDb</code>, <code>peakDb</code>), safe-listening minutes, and loud-exposure alerts. Raw microphone audio is never recorded or transmitted.</li>
+    </ul>
+
+    <h2>3. Android AccessibilityService Disclosure (Google Play Policy)</h2>
+    <p>On Android devices, ScreenSync optionally uses the Android <code>AccessibilityService</code> API <strong>exclusively</strong> after you provide explicit affirmative consent in the in-app Prominent Disclosure dialog:</p>
+    <ul>
+      <li>Detecting vertical scroll gestures (<code>TYPE_VIEW_SCROLLED</code>) inside supported short-form video feeds and mobile browsers to update your daily Reel/Shorts counter and trigger mindful scroll nudges.</li>
+      <li>Detecting foreground package transitions (<code>TYPE_WINDOW_STATE_CHANGED</code>) to enforce user-configured App Timers, Focus Mode distraction guards, and Bedtime Wind-Down rules.</li>
+      <li>ScreenSync <strong>never</strong> reads, logs, or transmits passwords, private messages, banking details, keystrokes, form inputs, or screen text content.</li>
+      <li>You can revoke Accessibility consent at any time inside <strong>Account &rarr; Device Permissions</strong> or in Android System Settings.</li>
+    </ul>
+
+    <h2>4. Configurable Data Retention &amp; Automatic Pruning</h2>
+    <p>You control how long historical usage logs are kept on your device and in your synced cloud profile via <strong>Account &rarr; Data Export &amp; Backup &rarr; Keep History For</strong>. Supported retention windows are <strong>30 Days, 60 Days, 90 Days (default), 180 Days, 1 Year (365 Days), or Forever (Unlimited)</strong>. When a retention window is active, daily usage logs, reel logs, focus sessions, website sessions, hourly buckets, security alerts, and sound telemetry older than your chosen cutoff date are automatically pruned across local storage, native Android SQLite tables, and synced cloud tables via <code>prune_user_history_older_than</code>, with deletion tombstones synced across your connected devices.</p>
+
+    <h2 id="account-deletion">5. Account &amp; Personal Data Deletion (GDPR Art. 17 / CCPA / Play Store Deletion Policy)</h2>
+    <p>When signed in, you can permanently delete your account and all associated personal data at any time without leaving the app:</p>
+    <ol>
+      <li>Open <strong>Account &rarr; Privacy Policy, Terms &amp; Account Deletion</strong>.</li>
+      <li>Click <strong>Delete Account &amp; Data</strong> and confirm your account password (verified live via Supabase Auth <code>signInWithPassword</code>).</li>
+      <li>ScreenSync awaits the server-side cascading deletion Edge Function (<code>delete-account</code>) and PostgreSQL RPC (<code>delete_user_account_and_all_data</code>) across all 20 user tables plus your authentication record (<code>auth.users</code>), then wipes your local storage, native Android SQLite database and exported files, and iOS App Group defaults, and signs out your session. If you are offline when requesting deletion, the cloud deletion request is durably queued and executed automatically when connectivity is restored.</li>
+      <li><strong>Out-of-App Web Deletion Request (Google Play Data Safety):</strong> If you have already uninstalled the app, you may also request permanent account and personal data deletion from the web by emailing <code>privacy@screensync.io</code> from your registered email address with the subject line <code>DELETE ACCOUNT</code>, or by signing in to the ScreenSync Web App and selecting <strong>Account &rarr; Privacy Policy, Terms &amp; Account Deletion &rarr; Delete Account &amp; Data</strong>.</li>
+      <li><strong>Audit Trail &amp; External Exports Notice:</strong> A minimal compliance deletion audit record (<code>account_deletions_audit_log</code> / <code>accountDeletionsLog</code>) is retained to verify deletion completion. Files you previously exported (CSV/JSON/backups) to your browser's Downloads folder are stored outside the app sandbox and are not deleted by web browsers; please delete them manually from your Downloads folder if desired.</li>
+    </ol>
+
+    <h2>6. Data Sharing, Sale &amp; Third-Party Trackers</h2>
+    <p>ScreenSync contains <strong>zero</strong> third-party advertising SDKs, behavioral profiling trackers, or data broker integrations. Your usage data is never sold or shared for advertising.</p>
+
+    <h2>7. Contact &amp; Data Protection Officer</h2>
+    <p>For privacy inquiries, data export requests, or account deletion assistance, contact <code>privacy@screensync.io</code>.</p>
+  </main>
+</body>
+</html>

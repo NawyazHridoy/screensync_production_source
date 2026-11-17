@@ -1,0 +1,63 @@
+{
+  "id": "/",
+  "name": "ScreenSync — Healthy Device Usage & Cross-Device Reel Tracker",
+  "short_name": "ScreenSync",
+  "description": "Cross-device screen time, short-form reel/short/story tracker, mindful break reminders, and focus guard across Android, iOS, Windows, macOS, Linux, and Web.",
+  "start_url": "./index.html?source=pwa",
+  "scope": "./",
+  "display": "standalone",
+  "display_override": [
+    "window-controls-overlay",
+    "standalone",
+    "minimal-ui"
+  ],
+  "background_color": "#030816",
+  "theme_color": "#030816",
+  "orientation": "any",
+  "categories": [
+    "productivity",
+    "health",
+    "lifestyle",
+    "utilities"
+  ],
+  "icons": [
+    {
+      "src": "icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Dashboard Overview",
+      "short_name": "Overview",
+      "description": "Open cross-device screen time and reel overview",
+      "url": "./index.html?view=OVERVIEW#overview"
+    },
+    {
+      "name": "Screen Time & Reel Tracker",
+      "short_name": "Screen Time",
+      "description": "Inspect screen time and short-form video sessions across Instagram, YouTube, and TikTok",
+      "url": "./index.html?view=STATS#reels"
+    },
+    {
+      "name": "Focus Mode & Guard",
+      "short_name": "Focus Mode",
+      "description": "Configure focus timers, mindful break reminders, and app limits",
+      "url": "./index.html?view=FOCUS#goals"
+    }
+  ]
+}

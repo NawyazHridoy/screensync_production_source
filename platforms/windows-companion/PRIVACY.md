@@ -1,0 +1,89 @@
+# Privacy policy
+
+_Last updated: 9 November 2026. Applies to ScreenSync 0.1.21 and later._
+
+ScreenSync is a free, open-source app that runs on your PC. It has no
+accounts, no ads, no analytics and no telemetry. The developer receives no
+data about you or how you use it. You can check everything below in the
+source code in this repository.
+
+## What stays on your PC
+
+Everything ScreenSync keeps is stored as plain text files in
+`%APPDATA%\ScreenSync` on your own computer:
+
+| File | What's in it |
+|---|---|
+| `settings.txt` | Your settings (style, position, mascot, sound, and so on) |
+| `todo.txt` | Your to-do tasks and reminder times |
+| `water.txt` | Your water reminder settings and the amounts you logged |
+| `tools.txt` | The colors you picked and your converter choices (calculator history is not saved) |
+| `shelf.txt` | The paths of files you put on the shelf (not the files themselves) |
+| `clipboard.txt` | Only clipboard entries you pinned, and snippets you saved |
+
+Nothing in these files is sent anywhere. Uninstalling ScreenSync asks whether
+to delete this folder too.
+
+## What ScreenSync reads, and only uses on your PC
+
+- **Now playing:** the title, artist, album art and playback position that
+  Windows shares from media apps (Spotify, browsers and others).
+- **Clipboard history** (off until you turn it on): what you copy. Unpinned
+  entries and all pictures live only in memory and are gone when ScreenSync
+  exits. Copies that password managers mark as private are never recorded.
+- **Show what I copy** (off until you turn it on): reads each new copy only
+  to show a short preview in the notch for about two seconds. Nothing is
+  stored, and copies that password managers mark as private are skipped.
+- **Windows notifications** (off until you turn it on): the app name, icon
+  and text of notifications in Windows' Notification Center, to show them in
+  the notch. They are not stored or sent anywhere.
+- **Mic and camera dots:** Windows' own record of which apps are using your
+  microphone or camera. ScreenSync never accesses the microphone or camera
+  itself.
+- **System status:** battery, network, volume, Caps Lock, keyboard language
+  and Bluetooth state, to show alerts.
+- **System monitor:** Windows' CPU, memory, network and disk counters, read
+  once a second and kept only in memory (the last minute).
+- **AI agents** (off until you connect an agent): when you switch on Hermes,
+  Claude Code or Codex, ScreenSync adds a hook to that agent's own settings
+  (Hermes' `hooks:` through `hermes config set` plus its hook allowlist;
+  `~/.claude/settings.json`, with a backup kept next to it;
+  `~/.codex/config.toml`). The hook passes on only the event name,
+  session id, project folder name, tool name and Claude's notice text;
+  prompts, code and tool output are never read. Nothing is stored or sent
+  anywhere, and switching it off (or uninstalling) removes the hook.
+- **Screenshots** (only when you click Screenshot): saved as PNG files in
+  your Pictures\Screenshots folder and listed on the Shelf.
+
+## When ScreenSync goes online
+
+ScreenSync connects to only two services, and never sends personal
+information to either:
+
+1. **[LRCLIB](https://lrclib.net)** (lyrics), only while the lyrics view is
+   open: the title, artist, album and length of the song that's playing, so
+   it can find matching lyrics. LRCLIB's own privacy terms apply to that
+   request.
+2. **GitHub** (updates), shortly after start and about twice a day: it asks
+   for the latest release number, and when you click **Update**, downloads
+   the installer. GitHub's privacy statement applies to those requests.
+   The automatic checks can be turned off in the installer ("Check for
+   updates automatically") or in Settings > General; **Check for updates**
+   still works when you click it.
+
+Like any internet request, these services can see your IP address.
+ScreenSync sends no identifiers, cookies or usage data with them.
+
+## Children
+
+ScreenSync collects no personal information from anyone, including children.
+
+## Changes
+
+Changes to this policy are made in this file and are visible in its history
+on GitHub.
+
+## Contact
+
+Questions? Open an issue at
+[github.com/screensync/MultiPurposeIsland/issues](https://github.com/screensync/MultiPurposeIsland/issues).

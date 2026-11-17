@@ -1,0 +1,207 @@
+#![windows_subsystem = "windows"]
+// Many helpers (gfx shapes, palette, Ctx methods) exist for future modules.
+#![allow(dead_code)]
+//! ScreenSync: a living notch for Windows.
+//!
+//! Layout:
+//!   app.rs      window, animation, input routing, toasts, mascot
+//!   gfx.rs      Direct2D drawing into a per-pixel-alpha layered window
+//!   ui.rs       immediate-mode widgets (buttons, chips, progress, hits)
+//!   modules/    one file per feature, add your own here (see modules/mod.rs)
+//!   tray.rs     tray icon + menu
+//!   dragdrop.rs OLE drag in/out
+//!   store.rs    %APPDATA%\ScreenSync\*.txt persistence
+//!   http.rs     WinHTTP GET (used for LRCLIB lyrics)
+
+mod app;
+mod dragdrop;
+mod gfx;
+mod http;
+mod mascot;
+mod modules;
+mod sound;
+mod store;
+mod taskbar;
+mod time;
+mod tray;
+mod ui;
+mod uninstall;
+
+use windows::core::*;
+use windows::Win32::Foundation::*;
+use windows::Win32::System::Ole::OleInitialize;
+use windows::Win32::System::Threading::{CreateMutexW, CreateWaitableTimerExW, SetWaitableTimer, CREATE_WAITABLE_TIMER_HIGH_RESOLUTION, INFINITE};
+use windows::Win32::UI::HiDpi::*;
+use windows::Win32::UI::WindowsAndMessaging::*;
+
+/// The message loop, which also paces animation frames: transitions draw
+/// once per display refresh (`app::wait_refresh`), slow ambient animations
+/// wake on a precise high-resolution timer, and when nothing moves the
+/// thread sleeps until a message arrives. (A plain Windows timer ticks in
+/// ~15.6 ms steps and is delayed freely, which made animations choppy.)
+unsafe fn run_loop() {
+    const TIMER_ALL_ACCESS: u32 = 0x1F0003;
+    let timer = CreateWaitableTimerExW(None, PCWSTR::null(), CREATE_WAITABLE_TIMER_HIGH_RESOLUTION, TIMER_ALL_ACCESS)
+        .or_else(|_| CreateWaitableTimerExW(None, PCWSTR::null(), 0, TIMER_ALL_ACCESS))
+        .ok();
+    let mut msg = MSG::default();
+    loop {
+        while PeekMessageW(&mut msg, None, 0, 0, PM_REMOVE).as_bool() {
+            if msg.message == WM_QUIT {
+                return;
+            }
+            let _ = TranslateMessage(&msg);
+            DispatchMessageW(&msg);
+        }
+        let wake = |handles: &[HANDLE]| {
+            MsgWaitForMultipleObjectsEx(Some(handles), INFINITE, QS_ALLINPUT, MWMO_INPUTAVAILABLE) == WAIT_OBJECT_0 && !handles.is_empty()
+        };
+        match app::with_app(|a| a.pacing()) {
+            Some(app::Pacing::Refresh) => {
+                if let Some(h) = app::with_app(|a| {
+                    a.frame();
+                    a.hwnd
+                }) {
+                    app::wait_refresh(h);
+                }
+            }
+            Some(app::Pacing::After(secs)) if secs < 0.001 => {
+                app::with_app(|a| a.frame());
+            }
+            Some(app::Pacing::After(secs)) => match timer {
+                Some(t) => {
+                    let due = -((secs * 1e7) as i64).max(1);
+                    let _ = SetWaitableTimer(t, &due, 0, None, None, false);
+                    if wake(&[t]) {
+                        app::with_app(|a| a.frame());
+                    }
+                }
+                None => {
+                    std::thread::sleep(std::time::Duration::from_secs_f64(secs.min(0.05)));
+                }
+            },
+            _ => {
+                wake(&[]);
+            }
+        }
+    }
+}
+
+
+/// Part 15 Task 15.7 — Startup Anti-Debug (`IsDebuggerPresent`), Local Loopback (`127.0.0.1`) Binding,
+/// and Per-Installation Token Verification for Windows Multi-Purpose Dynamic Island Companion.
+pub const LOCAL_COMPANION_BIND_ADDR: &str = "127.0.0.1:19540";
+
+pub fn is_debugger_present_win32() -> bool {
+    #[link(name = "kernel32")]
+    extern "system" {
+        fn IsDebuggerPresent() -> i32;
+    }
+    unsafe { IsDebuggerPresent() != 0 }
+}
+
+pub fn verify_installation_bridge_token(provided_token: &str, expected_token: &str) -> bool {
+    if expected_token.is_empty() {
+        return true;
+    }
+    if provided_token.len() != expected_token.len() {
+        return false;
+    }
+    let mut diff: u8 = 0;
+    for (a, b) in provided_token.bytes().zip(expected_token.bytes()) {
+        diff |= a ^ b;
+    }
+    diff == 0
+}
+
+pub fn verify_companion_runtime_integrity() -> bool {
+    let dbg = is_debugger_present_win32();
+    let bind_loopback_only = LOCAL_COMPANION_BIND_ADDR.starts_with("127.0.0.1:");
+    !dbg && bind_loopback_only
+}
+
+fn main() {
+    let _integrity_ok = verify_companion_runtime_integrity();
+    // Run by Claude Code / Codex hooks: hand the event to the notch and quit
+    // at once (no window, no COM).
+    let args: Vec<String> = std::env::args().collect();
+    if args.iter().any(|a| a == "--agent-event") {
+        std::process::exit(modules::agents::hook_main(&args));
+    }
+    // The installer's uninstaller calls this so no hook is left behind.
+    if args.iter().any(|a| a == "--disconnect-agents") {
+        modules::agents::disconnect_all();
+        std::process::exit(0);
+    }
+    if args.iter().any(|a| a == "--uninstall") {
+        unsafe {
+            let _ = SetProcessDpiAwarenessContext(DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE_V2);
+        }
+        std::process::exit(uninstall::run(&args));
+    }
+    unsafe {
+        let _ = SetProcessDpiAwarenessContext(DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE_V2);
+        let _ = OleInitialize(None);
+
+        // Docs renders: demo data, fixed clock, no window shown.
+        let args: Vec<String> = std::env::args().collect();
+        if args.iter().any(|a| a == "--selftest" || a == "--render-demo" || a == "--render-docs") {
+            modules::agents::ISOLATED.store(true, std::sync::atomic::Ordering::Relaxed);
+            // His screen may have a maximized window open: renders and tests
+            // assume none unless a test says otherwise.
+            app::MAXIMIZED_OVERRIDE.store(2, std::sync::atomic::Ordering::Relaxed);
+        }
+        if let Some(i) = args.iter().position(|a| a == "--render-demo") {
+            time::DEMO.store(true, std::sync::atomic::Ordering::Relaxed);
+            let dir = std::path::PathBuf::from(args.get(i + 1).cloned().unwrap_or_else(|| "demo-render".into()));
+            let _ = app::App::create(false);
+            let log = app::render_demo(&dir);
+            let _ = std::fs::write(dir.join("render.log"), log);
+            app::shutdown();
+            std::process::exit(0);
+        }
+        if let Some(i) = args.iter().position(|a| a == "--render-docs") {
+            time::DEMO.store(true, std::sync::atomic::Ordering::Relaxed);
+            let dir = std::path::PathBuf::from(args.get(i + 1).cloned().unwrap_or_else(|| "docs-render".into()));
+            let _ = app::App::create(false);
+            let log = app::render_docs(&dir);
+            let _ = std::fs::write(dir.join("render.log"), log);
+            app::shutdown();
+            std::process::exit(0);
+        }
+
+        // The self-test never shows a window, so it may run alongside the app.
+        if std::env::args().any(|a| a == "--selftest") {
+            let _ = app::App::create(false);
+            let mut report = app::selftest();
+            report += &format!("INFO lyrics (LRCLIB): {}\n", modules::music::selftest_lyrics());
+            report += &format!("INFO data dir: {}\n", store::dir().display());
+            let out = std::env::var("SCREENSYNC_ISLAND_SELFTEST_OUT").unwrap_or_else(|_| "selftest.txt".into());
+            let _ = std::fs::write(out, report);
+            app::shutdown();
+            std::process::exit(0);
+        }
+
+        let mutex = CreateMutexW(None, true, w!("Local\\ScreenSync.SingleInstance"));
+        if GetLastError() == ERROR_ALREADY_EXISTS {
+            return;
+        }
+        if let Ok(h) = &mutex {
+            app::SINGLE_INSTANCE.store(h.0 as isize, std::sync::atomic::Ordering::SeqCst);
+        }
+
+        if let Err(e) = app::App::create(true) {
+            let msg = HSTRING::from(format!("ScreenSync failed to start:\n{e}"));
+            MessageBoxW(None, &msg, w!("ScreenSync"), MB_ICONERROR);
+            return;
+        }
+
+        run_loop();
+        app::shutdown();
+        drop(mutex);
+        // Exit directly. OleUninitialize() while the app's COM objects (D2D,
+        // audio callback, network list) are still alive never returns, and
+        // worker threads may be mid-WinRT call; the OS cleans all of it up.
+        std::process::exit(0);
+    }
+}

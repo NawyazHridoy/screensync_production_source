@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  CAT11-22 Google Play Accessibility Policy & Least-Privilege Rationale:
+  - canRetrieveWindowContent="true" & flagReportViewIds: Required strictly to verify vertical ViewPager/RecyclerView
+    short-form player containers (Reels/Shorts/TikTok/Spotlight) and browser URL bar domains.
+  - flagRetrieveInteractiveWindows & flagIncludeNotImportantViews: Required to detect comment/share bottom-sheet
+    overlays that pause watch-time accumulation and Canvas/SurfaceView player nodes marked non-important for a11y.
+  - Privacy Guardrail: ScreenSyncAccessibilityService immediately aborts on any password node (node.isPassword() == true)
+    and any password-manager/banking/payment package, and hashes text tokens in memory so raw captions/messages are never stored.
+-->
+<accessibility-service xmlns:android="http://schemas.android.com/apk/res/android"
+    android:accessibilityEventTypes="typeWindowStateChanged|typeWindowContentChanged|typeViewScrolled|typeViewSelected|typeWindowsChanged"
+    android:accessibilityFeedbackType="feedbackGeneric"
+    android:accessibilityFlags="flagReportViewIds|flagRetrieveInteractiveWindows|flagIncludeNotImportantViews"
+    android:canRetrieveWindowContent="true"
+    android:description="@string/accessibility_service_description"
+    android:notificationTimeout="80" />

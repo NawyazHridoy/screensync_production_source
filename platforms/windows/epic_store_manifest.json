@@ -1,0 +1,15 @@
+{
+  "schemaVersion": "1.0",
+  "appName": "ScreenSyncDesktopCompanion",
+  "catalogItemId": "screensync-desktop-companion-v26",
+  "version": "3.5.0",
+  "launchExecutable": "ScreenSyncWindowsCompanion.exe",
+  "launchCommand": "--store=epic",
+  "supportedPlatforms": [
+    "Windows",
+    "Mac"
+  ],
+  "category": "Utilities & Productivity",
+  "previousVersion": "2.6.0",
+  "buildVersion": "3.4.0-build34"
+}

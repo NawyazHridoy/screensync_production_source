@@ -1,0 +1,27 @@
+app-id: io.screensync.wellness
+runtime: org.freedesktop.Platform
+runtime-version: "23.08"
+sdk: org.freedesktop.Sdk
+command: screensync-companion
+finish-args:
+  - --share=network
+  - --socket=x11
+  - --socket=wayland
+  - --socket=pulseaudio
+  - --talk-name=org.gnome.Shell
+  - --talk-name=org.gnome.Mutter.IdleMonitor
+  - --talk-name=org.mpris.MediaPlayer2.*
+modules:
+  - name: screensync-companion
+    buildsystem: simple
+    build-commands:
+      - install -Dm755 screensync_linux_companion.py /app/bin/screensync-companion
+      - install -Dm644 io.screensync.wellness.desktop /app/share/applications/io.screensync.wellness.desktop
+      - install -Dm644 io.screensync.wellness.metainfo.xml /app/share/metainfo/io.screensync.wellness.metainfo.xml
+    sources:
+      - type: file
+        path: ../screensync_linux_companion.py
+      - type: file
+        path: ../io.screensync.wellness.desktop
+      - type: file
+        path: ../io.screensync.wellness.metainfo.xml

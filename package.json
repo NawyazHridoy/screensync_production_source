@@ -1,0 +1,41 @@
+{
+  "name": "screensync-healthy-device-usage",
+  "version": "3.5.0",
+  "description": "ScreenSync — Healthy Device Usage & Cross-Device Reel Tracker (Supabase Auth + Cloud Sync + Cross-Platform Native & Local Bridge)",
+  "main": "www/index.html",
+  "scripts": {
+    "start": "npx serve www -l 3000",
+    "dev": "npx serve src -l 3000",
+    "build": "node build.js",
+    "build:hardened-release": "node scripts/harden-release-bundle.js",
+    "package:extension": "node scripts/package-browser-extension.js",
+    "sync:web": "node scripts/sync-web-assets.js",
+    "sync:server": "node server/sync_server.js",
+    "test": "node tests/run_all_tests.js",
+    "android:sync": "node scripts/sync-web-assets.js && npx cap sync android",
+    "android:open": "npx cap open android",
+    "android:build:debug": "cd android && ./gradlew assembleDebug",
+    "ios:sync": "node scripts/sync-web-assets.js && npx cap sync ios",
+    "ios:open": "npx cap open ios"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.49.1"
+  },
+  "keywords": [
+    "screensync",
+    "screensync-wellness",
+    "screen-time",
+    "reel-tracker",
+    "focus-mode",
+    "supabase",
+    "cross-platform",
+    "android",
+    "ios",
+    "windows",
+    "macos",
+    "chromeos"
+  ],
+  "author": "ScreenSync Engineering",
+  "license": "MIT",
+  "buildNumber": 35
+}

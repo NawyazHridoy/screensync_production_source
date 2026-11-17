@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<paths xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Scoped external & cache export directories (C13-13) + Capacitor compatibility paths -->
+    <external-path name="my_images" path="." />
+    <external-files-path name="screensync_exports" path="exports/" />
+    <external-files-path name="my_exports" path="." />
+    <cache-path name="my_cache_images" path="." />
+    <cache-path name="screensync_cache_exports" path="exports/" />
+    <files-path name="my_internal_files" path="." />
+</paths>

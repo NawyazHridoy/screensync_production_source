@@ -1,0 +1,308 @@
+{
+  "schemaVersion": "1.1.0",
+  "updatedAt": "2026-11-14",
+  "oemProfiles": [
+    {
+      "id": "XIAOMI_HYPEROS_MIUI",
+      "brand": "Xiaomi / Redmi / POCO",
+      "ui": "MIUI / HyperOS",
+      "classifyRegex": "\\b(xiaomi|redmi|poco|blackshark|hyperos|miui)\\b|25053rt|24069ra|2311drk|24129rt|23049pc|23127pn|24\\d{3}[a-z0-9]+|23\\d{3}[a-z0-9]+",
+      "minimalLabel": "Background Pop-ups & Lock Screen",
+      "minimalSubtitle": "Needed on Xiaomi/Redmi/POCO (HyperOS/MIUI) for lock screen, background pop-ups & autostart.",
+      "recommendedSettingsTitle": "HyperOS / MIUI Other Permissions & Background Pop-ups",
+      "recommendedChecklistItems": [
+        "Show on Lock screen",
+        "Display pop-up windows while running in the background",
+        "Display pop-up window",
+        "Home screen shortcuts",
+        "Autostart / Background Autostart"
+      ],
+      "checklist": [
+        {
+          "key": "autostart",
+          "title": "Enable Background Autostart",
+          "path": "Settings → Apps → Permissions → Background autostart → Enable ScreenSync",
+          "intentTarget": "autostart",
+          "packageName": "com.miui.securitycenter",
+          "activityClass": "com.miui.permcenter.autostart.AutoStartManagementActivity",
+          "intentAction": "miui.intent.action.OP_AUTO_START"
+        },
+        {
+          "key": "popup_background",
+          "title": "Display pop-up windows while running in the background",
+          "path": "Settings → Apps → Manage apps → ScreenSync → Other permissions → Always allow",
+          "intentTarget": "oem_other_permissions",
+          "packageName": "com.miui.securitycenter",
+          "activityClass": "com.miui.permcenter.permissions.PermissionsEditorActivity",
+          "intentAction": "miui.intent.action.APP_PERM_EDITOR"
+        },
+        {
+          "key": "battery_no_restrictions",
+          "title": "Battery Saver: No restrictions",
+          "path": "Settings → Apps → Manage apps → ScreenSync → Battery saver → No restrictions",
+          "intentTarget": "battery_optimization",
+          "packageName": "com.miui.powerkeeper",
+          "activityClass": "com.miui.powerkeeper.ui.HiddenAppsConfigActivity",
+          "intentAction": "android.settings.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS"
+        }
+      ]
+    },
+    {
+      "id": "SAMSUNG_ONEUI",
+      "brand": "Samsung Galaxy",
+      "ui": "One UI 5 / 6 / 7",
+      "classifyRegex": "\\b(samsung|galaxy)\\b|sm-s9|sm-a5|sm-f9|sm-g9|sm-x[89]|one\\s*ui",
+      "minimalLabel": "Unrestricted Battery & Appear on Top",
+      "minimalSubtitle": "Needed on Samsung One UI to prevent Deep Sleep from stopping alerts and widgets.",
+      "recommendedSettingsTitle": "One UI Unrestricted Battery & Appear on Top",
+      "recommendedChecklistItems": [
+        "Appear on top (Display over other apps)",
+        "Battery: Unrestricted (Never sleeping apps)",
+        "Lock screen notifications: Show content"
+      ],
+      "checklist": [
+        {
+          "key": "unrestricted_battery",
+          "title": "Battery Usage: Unrestricted",
+          "path": "Settings → Apps → ScreenSync → Battery → Unrestricted",
+          "intentTarget": "battery_optimization",
+          "packageName": "com.samsung.android.lool",
+          "activityClass": "com.samsung.android.sm.battery.ui.BatteryActivity",
+          "intentAction": "android.settings.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS"
+        },
+        {
+          "key": "never_auto_sleeping",
+          "title": "Add to Never auto-sleeping apps",
+          "path": "Settings → Battery → Background usage limits → Never auto-sleeping apps → Add ScreenSync",
+          "intentTarget": "oem_other_permissions",
+          "packageName": "com.samsung.android.lool",
+          "activityClass": "com.samsung.android.sm.ui.battery.BatteryActivity",
+          "intentAction": "android.settings.APPLICATION_DETAILS_SETTINGS"
+        },
+        {
+          "key": "appear_on_top",
+          "title": "Appear on top (Floating Pill)",
+          "path": "Settings → Apps → ⋮ Special access → Appear on top → Enable ScreenSync",
+          "intentTarget": "overlay",
+          "packageName": "com.android.settings",
+          "activityClass": "com.android.settings.Settings$OverlaySettingsActivity",
+          "intentAction": "android.settings.action.MANAGE_OVERLAY_PERMISSION"
+        }
+      ]
+    },
+    {
+      "id": "VIVO_ORIGIN_FUNTOUCH",
+      "brand": "Vivo / iQOO",
+      "ui": "Funtouch OS / OriginOS",
+      "classifyRegex": "\\b(vivo|iqoo|originos|funtouch)\\b|v2251|v2303|v2318|v2307|v240[58]|v2413",
+      "minimalLabel": "Background Pop-ups & Lock Screen",
+      "minimalSubtitle": "Needed on Vivo/iQOO (OriginOS/FuntouchOS) for lock screen, floating windows & background pop-ups.",
+      "recommendedSettingsTitle": "OriginOS / FuntouchOS Background Pop-ups & Autostart",
+      "recommendedChecklistItems": [
+        "Floating window",
+        "Display on lock screen",
+        "Background pop-ups",
+        "Autostart & High background power consumption"
+      ],
+      "checklist": [
+        {
+          "key": "autostart",
+          "title": "Enable Autostart & Associated Startup",
+          "path": "iManager → App manager → Autostart manager → Enable ScreenSync",
+          "intentTarget": "autostart",
+          "packageName": "com.vivo.permissionmanager",
+          "activityClass": "com.vivo.permissionmanager.activity.BgStartUpManagerActivity",
+          "intentAction": "android.settings.APPLICATION_DETAILS_SETTINGS"
+        },
+        {
+          "key": "floating_window",
+          "title": "Enable Floating Window & Background Pop-ups",
+          "path": "Settings → Apps → Special app access → Floating window → Enable ScreenSync",
+          "intentTarget": "oem_other_permissions",
+          "packageName": "com.vivo.permissionmanager",
+          "activityClass": "com.vivo.permissionmanager.activity.SoftPermissionDetailActivity",
+          "intentAction": "android.settings.action.MANAGE_OVERLAY_PERMISSION"
+        },
+        {
+          "key": "high_background_power",
+          "title": "Allow High Background Power Usage",
+          "path": "Settings → Battery → Background power consumption management → ScreenSync",
+          "intentTarget": "battery_optimization",
+          "packageName": "com.iqoo.secure",
+          "activityClass": "com.iqoo.secure.ui.phoneoptimize.AddWhiteListActivity",
+          "intentAction": "android.settings.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS"
+        }
+      ]
+    },
+    {
+      "id": "OPPO_REALME_ONEPLUS_COLOROS",
+      "brand": "OPPO / Realme / OnePlus",
+      "ui": "ColorOS / Realme UI / OxygenOS",
+      "classifyRegex": "\\b(oppo|realme|oneplus|coloros|oxygenos|heytap|oplus)\\b|cph2\\d+|rmx\\d+|pj[dz]110|pk[bcr]110",
+      "minimalLabel": "Floating Windows & Auto-launch",
+      "minimalSubtitle": "Needed on OPPO/Realme/OnePlus for background activity, auto-launch & floating alerts.",
+      "recommendedSettingsTitle": "ColorOS / OxygenOS / Realme UI Floating Windows & Auto-launch",
+      "recommendedChecklistItems": [
+        "Display over other apps / Floating windows",
+        "Auto-launch & Allow background activity",
+        "Banner & Lock screen notifications"
+      ],
+      "checklist": [
+        {
+          "key": "auto_launch",
+          "title": "Allow Auto-launch & Background Activity",
+          "path": "Settings → Apps → Auto launch → Enable ScreenSync",
+          "intentTarget": "autostart",
+          "packageName": "com.oplus.safecenter",
+          "activityClass": "com.oplus.safecenter.permission.startup.StartupAppListActivity",
+          "intentAction": "android.settings.APPLICATION_DETAILS_SETTINGS"
+        },
+        {
+          "key": "battery_unrestricted",
+          "title": "Allow Background Activity & Disable App Quick Freeze",
+          "path": "Settings → Apps → App management → ScreenSync → Battery usage",
+          "intentTarget": "battery_optimization",
+          "packageName": "com.coloros.safecenter",
+          "activityClass": "com.coloros.safecenter.permission.startup.StartupAppListActivity",
+          "intentAction": "android.settings.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS"
+        }
+      ]
+    },
+    {
+      "id": "HONOR_HUAWEI_MAGICOS",
+      "brand": "Honor / Huawei",
+      "ui": "MagicOS / EMUI",
+      "classifyRegex": "\\b(honor|huawei|magicos|emui|hihonor|harmonyos)\\b",
+      "minimalLabel": "App Launch & Dropzone Overlay",
+      "minimalSubtitle": "Needed on Honor/Huawei (MagicOS/EMUI) for manual app launch and dropzone overlays.",
+      "recommendedSettingsTitle": "MagicOS / EMUI App Launch (Manage Manually) & Dropzone",
+      "recommendedChecklistItems": [
+        "App launch: Manage manually (Auto-launch, Secondary launch, Run in background)",
+        "Dropzone / Display over other apps",
+        "Lock screen notifications"
+      ],
+      "checklist": [
+        {
+          "key": "app_launch_manual",
+          "title": "App Launch: Manage Manually (All 3 Toggles ON)",
+          "path": "Settings → Battery → App launch → ScreenSync → Manage manually",
+          "intentTarget": "autostart",
+          "packageName": "com.hihonor.systemmanager",
+          "activityClass": "com.hihonor.systemmanager.startupmgr.ui.StartupNormalAppListActivity",
+          "intentAction": "android.settings.APPLICATION_DETAILS_SETTINGS"
+        },
+        {
+          "key": "ignore_battery_opt",
+          "title": "Ignore Battery Optimizations",
+          "path": "Settings → Apps → ⋮ Special access → Battery optimization → Don't allow",
+          "intentTarget": "battery_optimization",
+          "packageName": "com.huawei.systemmanager",
+          "activityClass": "com.huawei.systemmanager.optimize.process.ProtectActivity",
+          "intentAction": "android.settings.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS"
+        }
+      ]
+    },
+    {
+      "id": "ASUS_MOBILE_MANAGER",
+      "brand": "ASUS Zenfone / ROG",
+      "ui": "ROG UI / ZenUI",
+      "classifyRegex": "\\b(asus|rog|zenfone|asus_z|asus_i)\\b",
+      "minimalLabel": "Auto-start & Unrestricted Battery",
+      "minimalSubtitle": "Needed on ASUS devices to allow Auto-start Manager and background alerts.",
+      "recommendedSettingsTitle": "ASUS Mobile Manager Auto-start & Unrestricted Battery",
+      "recommendedChecklistItems": [
+        "Auto-start Manager: Allow ScreenSync",
+        "Battery optimization: Unrestricted",
+        "Display over other apps"
+      ],
+      "checklist": [
+        {
+          "key": "auto_start_manager",
+          "title": "Mobile Manager: Allow Auto-start",
+          "path": "Mobile Manager → Auto-start Manager → Allow ScreenSync",
+          "intentTarget": "autostart",
+          "packageName": "com.asus.mobilemanager",
+          "activityClass": "com.asus.mobilemanager.autostart.AutoStartActivity",
+          "intentAction": "android.settings.APPLICATION_DETAILS_SETTINGS"
+        },
+        {
+          "key": "optiflex_exclude",
+          "title": "Battery Optimization: Unrestricted",
+          "path": "Settings → Battery → PowerMaster → Unrestricted",
+          "intentTarget": "battery_optimization",
+          "packageName": "com.asus.mobilemanager",
+          "activityClass": "com.asus.mobilemanager.powersaver.PowerSaverSettings",
+          "intentAction": "android.settings.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS"
+        }
+      ]
+    },
+    {
+      "id": "TRANSSION_HIOS_XOS",
+      "brand": "Tecno / Infinix / itel",
+      "ui": "HiOS / XOS",
+      "classifyRegex": "\\b(tecno|infinix|itel|hios|xos|transsion)\\b",
+      "minimalLabel": "Phone Master Auto-start & Battery Lab",
+      "minimalSubtitle": "Needed on Tecno/Infinix/itel (HiOS/XOS) to allow Phone Master auto-start and unrestricted battery.",
+      "recommendedSettingsTitle": "HiOS / XOS Phone Master Auto-start & Battery Lab",
+      "recommendedChecklistItems": [
+        "Phone Master: Enable Auto-start for ScreenSync",
+        "Battery Lab: Don't optimize / Allow background usage",
+        "Display over other apps"
+      ],
+      "checklist": [
+        {
+          "key": "phone_master_autostart",
+          "title": "Phone Master: Enable Auto-start",
+          "path": "Phone Master → Toolbox → Auto-start management → Enable ScreenSync",
+          "intentTarget": "autostart",
+          "packageName": "com.transsion.phonemaster",
+          "activityClass": "com.cyin.himgr.autostart.AutoStartActivity",
+          "intentAction": "android.settings.APPLICATION_DETAILS_SETTINGS"
+        },
+        {
+          "key": "battery_whitelist",
+          "title": "Battery Lab: Don't Optimize",
+          "path": "Settings → Battery Lab → Battery Optimization → Don't optimize",
+          "intentTarget": "battery_optimization",
+          "packageName": "com.transsion.phonemaster",
+          "activityClass": "com.cyin.himgr.widget.activity.MainActivity",
+          "intentAction": "android.settings.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS"
+        }
+      ]
+    },
+    {
+      "id": "STANDARD_AOSP_PIXEL_MOTO_NOTHING",
+      "brand": "Google Pixel / Motorola / Nothing / Standard Android",
+      "ui": "Android 12–15 (AOSP)",
+      "classifyRegex": ".*",
+      "minimalLabel": "Unrestricted Battery & Pop-ups",
+      "minimalSubtitle": "Needed to keep background tracking and lock-screen alerts active.",
+      "recommendedSettingsTitle": "Unrestricted Battery & Background Alerts",
+      "recommendedChecklistItems": [
+        "Battery usage: Unrestricted",
+        "Display over other apps",
+        "Notifications on lock screen"
+      ],
+      "checklist": [
+        {
+          "key": "unrestricted_battery",
+          "title": "App Battery Usage: Unrestricted",
+          "path": "Settings → Apps → ScreenSync → App battery usage → Unrestricted",
+          "intentTarget": "battery_optimization",
+          "packageName": "com.android.settings",
+          "activityClass": "com.android.settings.fuelgauge.AdvancedPowerUsageDetail",
+          "intentAction": "android.settings.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS"
+        },
+        {
+          "key": "display_over_other_apps",
+          "title": "Display over other apps",
+          "path": "Settings → Apps → Special app access → Display over other apps",
+          "intentTarget": "overlay",
+          "packageName": "com.android.settings",
+          "activityClass": "com.android.settings.Settings$OverlaySettingsActivity",
+          "intentAction": "android.settings.action.MANAGE_OVERLAY_PERMISSION"
+        }
+      ]
+    }
+  ]
+}

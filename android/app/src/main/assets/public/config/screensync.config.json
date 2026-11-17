@@ -1,0 +1,80 @@
+{
+  "appVersion": "3.5.0",
+  "appBuild": 35,
+  "version": "3.5.0",
+  "buildNumber": 35,
+  "defaultSyncPort": 3001,
+  "defaultSyncHost": "127.0.0.1",
+  "reelMinDwellMs": 1200,
+  "scrollSettleDebounceMs": 300,
+  "idleThresholdSeconds": 300,
+  "soundHarmfulDbThreshold": 75,
+  "toastDefaultDurationMs": 4500,
+  "splashMinVisibleMs": 400,
+  "splashMaxVisibleMs": 8000,
+  "featureFlags": {
+    "storeReleaseGateEnabled": false,
+    "webPreviewBannerEnabled": true
+  },
+  "supabase": {
+    "url": "https://ldephpgydnsovhlkuzbe.supabase.co",
+    "publishableKey": "sb_publishable_8mgpzcakPnNv8Z3g5lB_fg_86vpH-_q",
+    "projectRef": "ldephpgydnsovhlkuzbe",
+    "storageKey": "screensync_supabase_auth_token_v2"
+  },
+  "sync": {
+    "autoSyncIntervalMs": 30000,
+    "companionPollIntervalMs": 10000,
+    "localSyncServerUrl": "http://127.0.0.1:3001",
+    "localSyncServerFallbackUrl": "http://127.0.0.1:8788",
+    "desktopCompanionUrl": "http://127.0.0.1:19540",
+    "desktopCompanionFallbackUrl": "http://127.0.0.1:17935",
+    "redisEnabled": true,
+    "redisUrl": "redis://127.0.0.1:6379"
+  },
+  "supportedShortFormPackages": [
+    "com.instagram.android",
+    "com.burbn.instagram",
+    "com.instagram.lite",
+    "com.google.android.youtube",
+    "com.google.ios.youtube",
+    "com.zhiliaoapp.musically",
+    "com.ss.android.ugc.trill",
+    "com.zhiliaoapp.musically.go",
+    "com.tiktok.lite.go",
+    "com.facebook.katana",
+    "com.facebook.facebook",
+    "com.facebook.lite",
+    "com.facebook.orca",
+    "com.facebook.messenger",
+    "com.whatsapp",
+    "net.whatsapp.whatsapp",
+    "com.whatsapp.w4b",
+    "com.snapchat.android",
+    "com.toyopagroup.picaboo",
+    "com.twitter.android",
+    "com.atebits.Tweetie2",
+    "com.reddit.frontpage",
+    "com.reddit.Reddit"
+  ],
+  "SOCIAL_OAUTH_UI_ENABLED": false,
+  "REDIS_ENABLED": true,
+  "redisUrl": "redis://127.0.0.1:6379",
+  "oauth": {
+    "SOCIAL_OAUTH_UI_ENABLED": false,
+    "GOOGLE_WEB_CLIENT_ID": "",
+    "APPLE_SERVICE_ID": "",
+    "MICROSOFT_ENTRA_CLIENT_ID": "",
+    "redirectUrl": "io.screensync.wellness://auth/callback"
+  },
+  "firebase": {
+    "apiKey": "AIzaSyBeHvScix0nHocGArA-Sz7JNaLd3Fqk4vk",
+    "authDomain": "screensync-9fc1f.firebaseapp.com",
+    "projectId": "screensync-9fc1f",
+    "storageBucket": "screensync-9fc1f.firebasestorage.app",
+    "messagingSenderId": "454425029059",
+    "appId": "1:454425029059:web:04e698f8887b6d02b47576",
+    "measurementId": "G-V0D2H82SFW",
+    "vapidKey": "BM2TrsTdKznjz-aRf-Pm54OeZ1NI00ZwquhrLSRQpq3AdsUJ3YU2Pw3y62JBw0EJGD5wKy5zHx-JikPHUaOCvks"
+  }
+}

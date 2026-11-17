@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+  <id>io.screensync.wellness</id>
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>MIT</project_license>
+  <name>ScreenSync</name>
+  <summary>Healthy Device Usage &amp; Cross-Device Reel Tracker</summary>
+  <description>
+    <p>
+      ScreenSync tracks cross-device screen time, short-form video sessions (Reels, Shorts, TikTok, Stories), mindful break reminders, and focus goals across Linux, Windows, macOS, Android, iOS, and Web.
+    </p>
+  </description>
+  <launchable type="desktop-id">io.screensync.wellness.desktop</launchable>
+  <url type="homepage">https://screensync.io</url>
+  <developer_name>ScreenSync Wellness</developer_name>
+  <content_rating type="oars-1.1" />
+  <releases>
+    <release version="3.5.0" date="2026-10-26"/>
+    <release version="3.4.0" date="2026-10-26">
+      <description>
+        <p>Pass 26 (v3.4.0 Build 34): Added Brain State Visual dedicated Account sub-page, live animated per-reel &amp; 50-reel degrading brain icon in Dynamic Island, and every-50-reels full-display milestone overlay with automatic Dynamic Island hide/restore and 4-mode responsive optimization.</p>
+      </description>
+    </release>
+    <release version="3.3.0" date="2026-10-26" />
+    <release version="3.2.0" date="2026-10-26" />
+    <release version="3.1.0" date="2026-10-26" />
+    <release version="3.0.0" date="2026-10-26" />
+    <release version="2.9.0" date="2026-10-25" />
+    <release version="2.8.0" date="2026-10-25" />
+    <release version="2.7.0" date="2026-10-24" />
+    <release version="2.6.0" date="2026-10-24" />
+  </releases>
+</component>

@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ScreenSync Wellness Companion</title>
+  <style>
+    :root {
+      --bg-primary: #0c1311;
+      --bg-card: rgba(23, 35, 31, 0.92);
+      --border-subtle: rgba(52, 211, 153, 0.22);
+      --emerald-primary: #10B981;
+      --emerald-bright: #34D399;
+      --amber-accent: #F59E0B;
+      --text-main: #F5F5F4;
+      --text-muted: #A8A29E;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      width: 340px;
+      min-height: 410px;
+      background: radial-gradient(circle at top right, rgba(16, 185, 129, 0.16), transparent 60%), var(--bg-primary);
+      color: var(--text-main);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .brand img {
+      width: 28px;
+      height: 28px;
+      border-radius: 8px;
+    }
+    .brand-title {
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+    }
+    .brand-sub {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+    .status-pill {
+      font-size: 10px;
+      font-weight: 700;
+      padding: 4px 8px;
+      border-radius: 999px;
+      background: rgba(16, 185, 129, 0.16);
+      color: var(--emerald-bright);
+      border: 1px solid rgba(52, 211, 153, 0.35);
+    }
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+    .metric-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 14px;
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .metric-card.full-width {
+      grid-column: 1 / -1;
+    }
+    .metric-label {
+      font-size: 11px;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+    .metric-value {
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--text-main);
+    }
+    .metric-value.emerald {
+      color: var(--emerald-bright);
+    }
+    .metric-value.amber {
+      color: var(--amber-accent);
+    }
+    .metric-sub {
+      font-size: 10px;
+      color: var(--text-muted);
+    }
+    .focus-card {
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.14), rgba(245, 158, 11, 0.08));
+      border: 1px solid var(--border-subtle);
+      border-radius: 14px;
+      padding: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .btn-primary {
+      width: 100%;
+      padding: 11px 14px;
+      border-radius: 12px;
+      border: none;
+      background: linear-gradient(135deg, var(--emerald-primary), #059669);
+      color: #ffffff;
+      font-weight: 700;
+      font-size: 13px;
+      cursor: pointer;
+      transition: opacity 0.15s ease;
+    }
+    .btn-primary:hover {
+      opacity: 0.92;
+    }
+    .btn-secondary {
+      width: 100%;
+      padding: 8px 12px;
+      border-radius: 10px;
+      border: 1px solid var(--border-subtle);
+      background: transparent;
+      color: var(--text-muted);
+      font-weight: 600;
+      font-size: 11px;
+      cursor: pointer;
+    }
+    .footer {
+      margin-top: auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 10px;
+      color: var(--text-muted);
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div class="brand">
+      <img src="icons/icon-48.png" alt="ScreenSync" />
+      <div>
+        <div class="brand-title">ScreenSync</div>
+        <div class="brand-sub" id="popupOsDeviceLabel">MV3 Companion</div>
+      </div>
+    </div>
+    <span class="status-pill" id="popupConnectionBadge">LIVE</span>
+  </div>
+
+  <div class="metrics-grid">
+    <div class="metric-card full-width">
+      <span class="metric-label">Today's Screen Time</span>
+      <span class="metric-value emerald" id="popupScreenTimeValue">0h 0m</span>
+      <span class="metric-sub" id="popupDayKeyLabel">Cross-device browser &amp; OS activity</span>
+    </div>
+    <div class="metric-card">
+      <span class="metric-label">Reels / Shorts Count</span>
+      <span class="metric-value" id="popupReelsCountValue">0</span>
+      <span class="metric-sub">1.2s dwell verified</span>
+    </div>
+    <div class="metric-card">
+      <span class="metric-label">Reel Watch Time</span>
+      <span class="metric-value amber" id="popupReelWatchTimeValue">0m</span>
+      <span class="metric-sub" id="popupFastSkipSub">0 fast skips</span>
+    </div>
+  </div>
+
+  <div class="focus-card">
+    <div>
+      <div class="metric-label">Active Focus Session</div>
+      <div class="metric-value" style="font-size:15px;" id="popupFocusCountdownValue">Ready to Focus</div>
+    </div>
+    <span class="status-pill" id="popupFocusStatePill">IDLE</span>
+  </div>
+
+  <button type="button" class="btn-primary" id="btnOpenFullScreenSyncDashboard">
+    Open Full ScreenSync Dashboard
+  </button>
+  <button type="button" class="btn-secondary" id="btnOpenExtensionOptions">
+    Companion &amp; Bridge Settings
+  </button>
+
+  <div class="footer">
+    <span id="popupInstallationIdText">inst_default</span>
+    <span>v3.5.0 • MV3</span>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

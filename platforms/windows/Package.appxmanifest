@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Package
+  xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10"
+  xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
+  xmlns:uap5="http://schemas.microsoft.com/appx/manifest/uap/windows10/5"
+  xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities"
+  IgnorableNamespaces="uap uap5 rescap">
+
+  <!-- Pass 18 baseline: Version="2.6.0.0" | Pass 25 release: Version="3.5.0.0" -->
+  <Identity
+    Name="ScreenSyncWellness.DesktopCompanion"
+    Publisher="CN=ScreenSyncWellness"
+    Version="3.5.0.0"
+    ProcessorArchitecture="x64" />
+
+  <Properties>
+    <DisplayName>ScreenSync Healthy Device Usage &amp; Reel Tracker</DisplayName>
+    <PublisherDisplayName>ScreenSync Wellness</PublisherDisplayName>
+    <Logo>Assets\StoreLogo.png</Logo>
+    <Description>Cross-device screen time, short-form reel/short/story tracker, mindful break reminders, and focus guard for Windows 10 and Windows 11.</Description>
+  </Properties>
+
+  <Dependencies>
+    <TargetDeviceFamily Name="Windows.Desktop" MinVersion="10.0.17763.0" MaxVersionTested="10.0.22631.0" />
+  </Dependencies>
+
+  <Resources>
+    <Resource Language="en-us" />
+  </Resources>
+
+  <Applications>
+    <Application Id="ScreenSyncDesktopCompanion" Executable="ScreenSyncWindowsCompanion.exe" EntryPoint="Windows.FullTrustApplication">
+      <uap:VisualElements
+        DisplayName="ScreenSync Healthy Device Usage &amp; Reel Tracker"
+        Description="Native Windows Desktop Companion &amp; Local Wellness Bridge for ScreenSync"
+        BackgroundColor="#030816"
+        Square150x150Logo="Assets\Square150x150Logo.png"
+        Square44x44Logo="Assets\Square44x44Logo.png" />
+      <Extensions>
+        <uap5:Extension Category="windows.startupTask" Executable="ScreenSyncWindowsCompanion.exe" EntryPoint="Windows.FullTrustApplication">
+          <uap5:StartupTask
+            TaskId="ScreenSyncStartupTask"
+            Enabled="true"
+            DisplayName="ScreenSync Companion Background Monitor" />
+        </uap5:Extension>
+      </Extensions>
+    </Application>
+  </Applications>
+
+  <Capabilities>
+    <Capability Name="internetClient" />
+    <rescap:Capability Name="runFullTrust" />
+  </Capabilities>
+</Package>
+
+<!-- Historical: Version="3.4.0.0" -->

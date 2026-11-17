@@ -1,0 +1,46 @@
+{
+  "appName": "ScreenSync: Healthy Device Usage & Reel Tracker",
+  "packageId": "io.screensync.wellness",
+  "bundleId": "io.screensync.wellness",
+  "versionName": "3.5.0",
+  "versionCode": 35,
+  "category": "Health & Fitness / Productivity",
+  "ageRating": {
+    "googlePlay": "Everyone (PEGI 3 / IARC 3+)",
+    "appleAppStore": "4+",
+    "microsoftStore": "Everyone"
+  },
+  "storePackages": {
+    "googlePlayStore": "Android App Bundle (.aab) + APK via gradle bundlePlaystoreRelease",
+    "appleAppStore": "iOS/iPadOS Archive (.ipa) via Xcode + StoreKit 2",
+    "microsoftStore": "MSIX / APPX (platforms/windows/Package.appxmanifest)",
+    "macAppStore": "macOS Universal Bundle (.app / .pkg via platforms/macos/Info.plist)"
+  },
+  "assets": {
+    "icon512x512": "store_assets/play_store_icon_512x512.png",
+    "featureGraphic1024x500": "store_assets/play_store_feature_graphic_1024x500.png",
+    "screenshots": [
+      "store_assets/screenshots/phone_1_overview.png",
+      "store_assets/screenshots/phone_2_brain_state.png",
+      "store_assets/screenshots/phone_3_subscription.png",
+      "store_assets/screenshots/tablet_10in_dashboard.png"
+    ]
+  },
+  "policyCompliance": {
+    "privacyPolicyUrl": "https://screensync.io/privacy_policy.html",
+    "localPrivacyPolicyFile": "privacy_policy.html",
+    "termsOfServiceFile": "terms_of_service.html",
+    "inAppAccountDeletionImplemented": true,
+    "accessibilityProminentDisclosureImplemented": true,
+    "billingSdk": {
+      "android": "com.android.billingclient:billing:7.1.1",
+      "ios": "StoreKit 2",
+      "windows": "Windows.Services.Store",
+      "web": "Stripe + Supabase Realtime Entitlements"
+    },
+    "zeroMalwareOrSpyware": true,
+    "nominativeFairUseTelemetryCompliance": true,
+    "accountDeletionUrl": "https://screensync.io/privacy_policy.html#account-deletion"
+  },
+  "accountDeletionUrl": "https://screensync.io/privacy_policy.html#account-deletion"
+}

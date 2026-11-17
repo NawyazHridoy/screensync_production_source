@@ -1,0 +1,9 @@
+platform :ios, '15.0'
+use_frameworks!
+
+target 'App' do
+  # Capacitor iOS bridge pods (optional when using native WKWebView host in AppDelegate.swift)
+  pod 'FirebaseCore'
+  pod 'FirebaseMessaging'
+  pod 'FirebaseCrashlytics'
+end

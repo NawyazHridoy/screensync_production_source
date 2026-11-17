@@ -1,0 +1,76 @@
+# ============================================================================
+# ScreenSync — Root Git Ignore Configuration
+# Protects environment secrets, local runtime state, and build artifacts.
+# ============================================================================
+
+# 1. Environment Configuration & Secret Files (NEVER commit real credentials)
+.env
+.env.local
+.env.development
+.env.production
+.env.staging
+.env.test
+.env.*
+supabase/.env
+supabase/.env.*
+supabase/functions/.env
+supabase/functions/**/.env
+server/.env
+server/.env.*
+
+# Explicitly allow safe example templates to remain tracked in Git
+!.env.example
+!**/.env.example
+
+# 2. Local Sync Server & Embedded Redis Runtime State (User Data & Session Tokens)
+server/cloud_sync_store.json
+server/cloud_sync_store.json.*
+server/data/*.tmp
+*.corrupt.*.bak
+screensync.db
+screensync.db-journal
+screensync.db-shm
+screensync.db-wal
+
+# 3. Node.js & Package Manager Dependencies
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# 4. Android & iOS Build Outputs and Signing Credentials
+android/.gradle/
+android/build/
+android/app/build/
+android/local.properties
+*.jks
+*.keystore
+key.properties
+ios/App/Pods/
+ios/App/build/
+ios/App/DerivedData/
+*.ipa
+*.apk
+*.aab
+
+# 5. Desktop Companion Build Outputs (Rust / .NET / Swift / Python)
+platforms/windows-companion/target/
+platforms/windows-companion/dist/
+platforms/windows-companion/selftest.txt
+platforms/windows/bin/
+platforms/windows/obj/
+platforms/macos/.build/
+__pycache__/
+*.pyc
+
+# 6. OS & Editor Temporary Files
+.DS_Store
+Thumbs.db
+*.tmp
+*.log
+*.swp
+
+# 7. Firebase Service Account Private Keys (NEVER commit)
+*firebase-adminsdk*.json
+service-account*.json
