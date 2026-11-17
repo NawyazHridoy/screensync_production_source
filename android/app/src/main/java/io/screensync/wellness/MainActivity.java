@@ -568,7 +568,7 @@ public class MainActivity extends AppCompatActivity {
                         String geomJson = new ScreenSyncJsBridge().getDisplayCutoutJson();
                         String escaped = JSONObject.quote(geomJson != null ? geomJson : "{}");
                         webView.evaluateJavascript(
-                            "if(window.ScreenSyncApp&&typeof window.ScreenSyncApp.onDisplayGeometryChanged==="function"){window.ScreenSyncApp.onDisplayGeometryChanged(JSON.parse(" + escaped + "));}",
+                            "if(window.ScreenSyncApp&&typeof window.ScreenSyncApp.onDisplayGeometryChanged===\"function\"){window.ScreenSyncApp.onDisplayGeometryChanged(JSON.parse(" + escaped + "));}",
                             null
                         );
                     } catch (Exception ignored) {}
@@ -3741,7 +3741,7 @@ public class MainActivity extends AppCompatActivity {
                             boolean isNear = event.values[0] < Math.min(3.0f, maxRange);
                             if (!isNear) {
                                 runOnUiThread(() -> webView.evaluateJavascript(
-                                    "if (window.ScreenSyncApp && window.ScreenSyncApp.UnlockMissionController) { window.ScreenSyncApp.UnlockMissionController.resetOnInterruption("PROXIMITY_REMOVED"); if (window.ScreenSyncApp.Part16UIController) window.ScreenSyncApp.Part16UIController.renderUnlockMissionModalState(); }",
+                                    "if (window.ScreenSyncApp && window.ScreenSyncApp.UnlockMissionController) { window.ScreenSyncApp.UnlockMissionController.resetOnInterruption(\"PROXIMITY_REMOVED\"); if (window.ScreenSyncApp.Part16UIController) window.ScreenSyncApp.Part16UIController.renderUnlockMissionModalState(); }",
                                     null
                                 ));
                             }
@@ -3749,7 +3749,7 @@ public class MainActivity extends AppCompatActivity {
                             float z = event.values[2];
                             if (z > -7.0f) {
                                 runOnUiThread(() -> webView.evaluateJavascript(
-                                    "if (window.ScreenSyncApp && window.ScreenSyncApp.UnlockMissionController) { window.ScreenSyncApp.UnlockMissionController.resetOnInterruption("FLIP_LIFTED"); if (window.ScreenSyncApp.Part16UIController) window.ScreenSyncApp.Part16UIController.renderUnlockMissionModalState(); }",
+                                    "if (window.ScreenSyncApp && window.ScreenSyncApp.UnlockMissionController) { window.ScreenSyncApp.UnlockMissionController.resetOnInterruption(\"FLIP_LIFTED\"); if (window.ScreenSyncApp.Part16UIController) window.ScreenSyncApp.Part16UIController.renderUnlockMissionModalState(); }",
                                     null
                                 ));
                             }
