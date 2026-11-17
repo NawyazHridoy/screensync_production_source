@@ -1,22 +1,3 @@
-# ScreenSync — CI build (restored Step 0 fix)
-#
-# This file was missing from the shipped ZIP, so tests/run_all_tests.js
-# aborted at Pass 2 ("Pass 2: .github/workflows/build.yml must exist")
-# and no category test ran at all. It builds the Android app with the
-# Gradle wrapper version pinned in android/gradle/wrapper/
-# gradle-wrapper.properties (Gradle 8.5) and runs the JS test suite
-# (package.json: "test": "node tests/run_all_tests.js").
-#
-# Project facts it is built on:
-# - AGP 8.2.2 (android/build.gradle), Java 17 (android/app/build.gradle:
-#   sourceCompatibility/targetCompatibility JavaVersion.VERSION_17)
-# - Play Store flavour "playstore" (android/app/build.gradle,
-#   flavorDimensions "store"), versionCode 35 / versionName "3.5.0"
-#   (package.json version "3.5.0")
-# - The android/ directory is committed in the repo; this workflow never
-#   recreates it (no android platform re-add, no destructive cleanup).
-
-
 name: Build ScreenSync Production APK and AAB
 
 on:

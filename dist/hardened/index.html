@@ -1914,8 +1914,16 @@ font-size: 12px;
 line-height: 1.5;
 text-align: left;
 }
-html[data-native-android="true"] #appMainContainer {
-padding-top: calc(var(--ss-safe-top-inset, 28px) + 8px) !important;
+html[data-native-android="true"] #appMainContainer,
+html[data-os-category="Android"] #appMainContainer,
+html[data-os-category="iOS"] #appMainContainer,
+#appMainContainer.mode-phone {
+padding-top: calc(max(var(--ss-safe-top-inset, 42px), env(safe-area-inset-top, 42px), 42px) + 12px) !important;
+}
+@media (max-width: 639px) {
+html:not([data-os-category="Windows"]):not([data-os-category="macOS"]):not([data-os-category="Linux"]):not([data-os-category="ChromeOS"]) #appMainContainer {
+padding-top: calc(max(var(--ss-safe-top-inset, 42px), env(safe-area-inset-top, 42px), 42px) + 12px) !important;
+}
 }
 html[data-native-android="true"] #dynamicIslandStickyHeader,
 html[data-native-android="true"] #dynamicIslandPill {
@@ -6931,6 +6939,17 @@ backdrop-filter: var(--ss-statusbar-blur);
 mask-image: linear-gradient(180deg, #000 0%, #000 58%, transparent 100%);
 -webkit-mask-image: linear-gradient(180deg, #000 0%, #000 58%, transparent 100%);
 transition: background 240ms ease, backdrop-filter 240ms ease;
+}
+html:not([data-page-scrolled="true"]) #statusBarDynamicFadeOverlay.ss-statusbar-fade-layer {
+opacity: 0 !important;
+height: 0px !important;
+backdrop-filter: none !important;
+-webkit-backdrop-filter: none !important;
+background: transparent !important;
+}
+html[data-page-scrolled="true"] #statusBarDynamicFadeOverlay.ss-statusbar-fade-layer {
+opacity: 1;
+height: calc(max(var(--ss-safe-top-inset, 38px), 38px) + 10px);
 }
 #legacyTechnicalExportControlsHiddenHost,
 #btnExportCsvData,
@@ -22353,6 +22372,12 @@ window.__SCREENSYNC_HARDENED_RELEASE__ = true;
             stickyHeader.style.setProperty("--ss-safe-left-inset", `${layout.safeInsets.left}px`);
             stickyHeader.style.setProperty("--ss-safe-right-inset", `${layout.safeInsets.right}px`);
           }
+          if (typeof document !== "undefined" && document.documentElement && document.documentElement.style && typeof document.documentElement.style.setProperty === "function") {
+            const docOs = document.documentElement.getAttribute("data-os-category") || "";
+            const isMobileOs = docOs === "Android" || docOs === "iOS" || document.documentElement.getAttribute("data-native-android") === "true";
+            const safeTopPx = isMobileOs ? Math.max(40, Number(layout.safeInsets.top) || 40) : Math.max(28, Number(layout.safeInsets.top) || 28);
+            document.documentElement.style.setProperty("--ss-safe-top-inset", `${safeTopPx}px`);
+          }
 
           if (container && container.style && typeof container.style.setProperty === "function") {
             container.style.setProperty("--ss-island-container-justify", layout.containerJustify);
@@ -24786,8 +24811,31 @@ window.__SCREENSYNC_HARDENED_RELEASE__ = true;
           cEl.addEventListener("scroll", onScrollCheck, { capture: true, passive: true });
         }
       });
+      const syncTopStatusBarScrollFade = (ev) => {
+        try {
+          if (typeof document === "undefined" || !document.documentElement) return;
+          const y = readCurrentScrollOffset(ev);
+          if (y > 8) {
+            if (document.documentElement.getAttribute("data-page-scrolled") !== "true") {
+              document.documentElement.setAttribute("data-page-scrolled", "true");
+            }
+          } else {
+            if (document.documentElement.getAttribute("data-page-scrolled") === "true") {
+              document.documentElement.removeAttribute("data-page-scrolled");
+            }
+          }
+        } catch (e) {}
+      };
+      if (typeof window !== "undefined" && typeof window.addEventListener === "function") {
+        window.addEventListener("scroll", syncTopStatusBarScrollFade, { capture: true, passive: true });
+      }
+      if (typeof document !== "undefined" && typeof document.addEventListener === "function") {
+        document.addEventListener("scroll", syncTopStatusBarScrollFade, { capture: true, passive: true });
+      }
+      syncTopStatusBarScrollFade(null);
       if (typeof window !== "undefined") {
         window.__ssAccountScrollCheck = onScrollCheck;
+        window.__ssSyncTopStatusBarScrollFade = syncTopStatusBarScrollFade;
         window.__ssMarkAccountDrawerOpened = markDrawerOpened;
         window.__ssCollapseAccountDrawer = collapseDrawerEntry;
       }

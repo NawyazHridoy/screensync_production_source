@@ -8,6 +8,10 @@ import android.content.Intent;
 public final class ScreenSyncWidgetUpdater {
     private ScreenSyncWidgetUpdater() {}
 
+    public static void refreshAllWidgets(Context context) {
+        updateAllWidgets(context);
+    }
+
     public static void updateAllWidgets(Context context) {
         if (context == null) return;
         try {

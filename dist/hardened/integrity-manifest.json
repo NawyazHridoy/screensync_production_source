@@ -1,7 +1,7 @@
 {
   "version": "3.5.0",
   "buildNumber": 35,
-  "generatedAtIso": "2026-11-16T22:50:44.564Z",
+  "generatedAtIso": "2026-11-17T06:06:20.861Z",
   "sourceReadablePreserved": true,
   "supportedPlatforms": [
     "Android",
@@ -12,11 +12,11 @@
     "ChromeOS"
   ],
   "hashes": {
-    "srcIndexHtmlSha256": "a17789ab1e85436497ecae23c1e9d5154bafa793e81c440402f6fb481ebc05dd",
-    "srcAppJsSha256": "2746c8859890a9c57352caf277c622066f7f3361b9db23678623a87b51b40f46",
-    "srcMainCssSha256": "1c32f8ea410825c966ea3558f26a091704195a28cc6ce2081ed61422ca1d2b0b",
-    "hardenedIndexHtmlSha256": "cc6a257df0bf3d4b1d3ee6994615af57012135f5341875a9a823c5bc25dd034b",
-    "hardenedAppJsSha256": "02b362067e91898beeec250abcaba45fa5de7a9b469fea75ef8a0f5dff1dcacf",
-    "hardenedMainCssSha256": "b77faaa0cec85e022c0862f60372d81abe7d1335b4c8fb2044575462fbb6df20"
+    "srcIndexHtmlSha256": "cf463163cff30b139bbf9870537bce5fb81545e6cf428f2d1b074eb0e5a2a1e7",
+    "srcAppJsSha256": "ea5ca7d911bfa2f6f35f8ab76aa825a50e1f2817d2054a61867ad73146eafd58",
+    "srcMainCssSha256": "9ddddd3609d015728522b3e1a7a3e38e34d950b5cd3f53cc681df6de2d7670e7",
+    "hardenedIndexHtmlSha256": "efe25251c0386d748509ab17cfc7d679a79d654eea46331183654f6ca4d7f8a9",
+    "hardenedAppJsSha256": "70c43dc99fc3c12eb222f59a53398b9df035e126d67a1bb44cace1b9100c0f6a",
+    "hardenedMainCssSha256": "50276e7fba7aab7ea8608e25ab96e9c4cbd95c41cee5f4b1e8e689fc4a3e8172"
   }
 }

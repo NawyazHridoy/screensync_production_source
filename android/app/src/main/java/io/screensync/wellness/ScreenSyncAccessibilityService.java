@@ -215,6 +215,7 @@ public class ScreenSyncAccessibilityService extends AccessibilityService {
     private String activePackage = null;
     private String activeBrowserHostPackage = null;
     private boolean isIdleClamped = false;
+    private volatile boolean isBrowserShortFormActive = false;
     private String lastCommittedSignature = null;
     private String candidateSignature = null;
     private int candidateScrollIdx = -1;
@@ -1142,6 +1143,12 @@ public class ScreenSyncAccessibilityService extends AccessibilityService {
     }
 
     private boolean isBrowserShortFormActive(AccessibilityNodeInfo root, int screenW, int screenH) {
+        boolean detected = isBrowserShortFormActiveInternal(root, screenW, screenH);
+        this.isBrowserShortFormActive = detected;
+        return detected;
+    }
+
+    private boolean isBrowserShortFormActiveInternal(AccessibilityNodeInfo root, int screenW, int screenH) {
         ArrayDeque<AccessibilityNodeInfo> queue = new ArrayDeque<>();
         queue.add(root);
         boolean hasUrlMatch = false;

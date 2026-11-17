@@ -2,8 +2,29 @@
   "engine": "ScreenSync-RedisStateEngine-v1",
   "redisEnabled": true,
   "redisUrl": "redis://127.0.0.1:6379",
-  "updatedAtMs": 1794889401279,
-  "kv": {},
+  "updatedAtMs": 1794895572533,
+  "kv": {
+    "rl:auth:127.0.0.1:usr_no_hash_test_99": {
+      "value": 1,
+      "updatedAtMs": 1794895572508,
+      "expiresAtMs": 1794895632509
+    },
+    "rl:account_delete:127.0.0.1:usr_no_hash_test_99": {
+      "value": 1,
+      "updatedAtMs": 1794895572514,
+      "expiresAtMs": 1794895632514
+    },
+    "rl:sync:127.0.0.1:usr_test_sync_01": {
+      "value": 2,
+      "updatedAtMs": 1794895572528,
+      "expiresAtMs": 1794895632526
+    },
+    "rl:sync:127.0.0.1:usr_rl_test_01": {
+      "value": 2,
+      "updatedAtMs": 1794895572533,
+      "expiresAtMs": 1794895632531
+    }
+  },
   "hashes": {
     "session:tok_usr_rahim_01_123456": {
       "userId": "usr_rahim_01"

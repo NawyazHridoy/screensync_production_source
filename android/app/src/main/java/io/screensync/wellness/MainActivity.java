@@ -18,6 +18,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
@@ -29,6 +30,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.PowerManager;
+import android.os.SystemClock;
 import android.os.Process;
 import android.provider.Settings;
 import android.util.Base64;
@@ -495,7 +497,23 @@ public class MainActivity extends AppCompatActivity {
 
         webView.addJavascriptInterface(new ScreenSyncAndroidBridge(), "ScreenSyncNativeBridge");
         webView.setBackgroundColor(android.graphics.Color.parseColor("#040D1F"));
-        webView.setWebViewClient(new WebViewClient());
+        webView.setWebViewClient(new WebViewClient() {
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                super.onPageFinished(view, url);
+                try {
+                    int insetDp = new ScreenSyncAndroidBridge().getStatusBarInsetDp();
+                    view.evaluateJavascript(
+                        "document.documentElement.setAttribute('data-native-android','true');" +
+                        "document.documentElement.setAttribute('data-os-category','Android');" +
+                        "document.documentElement.style.setProperty('--ss-safe-top-inset','" + insetDp + "px');" +
+                        "if(window.ScreenSyncApp&&window.ScreenSyncApp.AutoSyncService&&typeof window.ScreenSyncApp.AutoSyncService.syncWithBackend==='function'){window.ScreenSyncApp.AutoSyncService.syncWithBackend();}",
+                        null
+                    );
+                    syncAllNativePermissionsToWebView();
+                } catch (Exception ignored) {}
+            }
+        });
         webView.setWebChromeClient(new android.webkit.WebChromeClient() {
             @Override
             public boolean onShowFileChooser(
@@ -565,7 +583,7 @@ public class MainActivity extends AppCompatActivity {
                         );
                     } catch (Exception ignored) {}
                     try {
-                        String geomJson = new ScreenSyncJsBridge().getDisplayCutoutJson();
+                        String geomJson = new ScreenSyncAndroidBridge().getDisplayCutoutJson();
                         String escaped = JSONObject.quote(geomJson != null ? geomJson : "{}");
                         webView.evaluateJavascript(
                             "if(window.ScreenSyncApp&&typeof window.ScreenSyncApp.onDisplayGeometryChanged===\"function\"){window.ScreenSyncApp.onDisplayGeometryChanged(JSON.parse(" + escaped + "));}",
@@ -721,7 +739,10 @@ public class MainActivity extends AppCompatActivity {
                         startActivity(new Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS));
                     }
                 })
-                .setNegativeButton("Later", (d, w) -> prefs.edit().putBoolean("usage_deferred_by_user", true).apply())
+                .setNegativeButton("Later", (d, w) -> {
+                    prefs.edit().putBoolean("usage_deferred_by_user", true).apply();
+                    new Handler(Looper.getMainLooper()).postDelayed(this::promptNextMissingSystemPermissionNatively, 200L);
+                })
                 .create();
             activePermissionDialog.setOnDismissListener(d -> activePermissionDialog = null);
             activePermissionDialog.show();
@@ -734,7 +755,10 @@ public class MainActivity extends AppCompatActivity {
                     Intent i = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse("package:" + getPackageName()));
                     startActivity(i);
                 })
-                .setNegativeButton("Later", (d, w) -> prefs.edit().putBoolean("overlay_deferred_by_user", true).apply())
+                .setNegativeButton("Later", (d, w) -> {
+                    prefs.edit().putBoolean("overlay_deferred_by_user", true).apply();
+                    new Handler(Looper.getMainLooper()).postDelayed(this::promptNextMissingSystemPermissionNatively, 200L);
+                })
                 .create();
             activePermissionDialog.setOnDismissListener(d -> activePermissionDialog = null);
             activePermissionDialog.show();
@@ -753,7 +777,7 @@ public class MainActivity extends AppCompatActivity {
                         } catch (Exception ignored) {}
                     }
                 })
-                .setNegativeButton("Later", null)
+                .setNegativeButton("Later", (d, w) -> new Handler(Looper.getMainLooper()).postDelayed(this::promptNextMissingSystemPermissionNatively, 200L))
                 .create();
             activePermissionDialog.setOnDismissListener(d -> activePermissionDialog = null);
             activePermissionDialog.show();
@@ -1105,15 +1129,33 @@ public class MainActivity extends AppCompatActivity {
         @JavascriptInterface
         public int getStatusBarInsetDp() {
             try {
+                float density = getResources().getDisplayMetrics().density;
+                float safeDensity = density > 0 ? density : 1f;
+                int maxPx = 0;
                 int resourceId = getResources().getIdentifier("status_bar_height", "dimen", "android");
                 if (resourceId > 0) {
-                    int px = getResources().getDimensionPixelSize(resourceId);
-                    float density = getResources().getDisplayMetrics().density;
-                    return Math.max(24, Math.round(px / (density > 0 ? density : 1f)));
+                    maxPx = Math.max(maxPx, getResources().getDimensionPixelSize(resourceId));
+                }
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P && getWindow() != null && getWindow().getDecorView() != null) {
+                    WindowInsets rootInsets = getWindow().getDecorView().getRootWindowInsets();
+                    if (rootInsets != null) {
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                            maxPx = Math.max(maxPx, rootInsets.getInsetsIgnoringVisibility(WindowInsets.Type.statusBars()).top);
+                        } else {
+                            maxPx = Math.max(maxPx, rootInsets.getSystemWindowInsetTop());
+                        }
+                        DisplayCutout cutout = rootInsets.getDisplayCutout();
+                        if (cutout != null) {
+                            maxPx = Math.max(maxPx, cutout.getSafeInsetTop());
+                        }
+                    }
+                }
+                if (maxPx > 0) {
+                    return Math.max(38, Math.round(maxPx / safeDensity));
                 }
             } catch (Exception ignored) {
             }
-            return 28;
+            return 38;
         }
 
         @JavascriptInterface
@@ -3113,7 +3155,7 @@ public class MainActivity extends AppCompatActivity {
                 .remove("widget_last_sync_epoch_ms")
                 .apply();
             try {
-                ScreenSyncWidgetUpdater.refreshAllWidgets(MainActivity.this);
+                ScreenSyncWidgetUpdater.updateAllWidgets(MainActivity.this);
             } catch (Exception ignored) {}
         }
 
@@ -3154,11 +3196,6 @@ public class MainActivity extends AppCompatActivity {
 
         @JavascriptInterface
         public void setBackNavigationInterceptEnabled(boolean enabled) {
-            nativeBackStackInterceptEnabled = enabled;
-        }
-
-        @JavascriptInterface
-        public void setNativeBackStackInterceptEnabled(boolean enabled) {
             nativeBackStackInterceptEnabled = enabled;
         }
 
@@ -3342,7 +3379,7 @@ public class MainActivity extends AppCompatActivity {
                 boolean usagePrompted = flowPrefs.getBoolean("usage_prompted_once", false);
                 boolean overlayPrompted = flowPrefs.getBoolean("overlay_prompted_after_usage", false);
                 boolean batteryPrompted = flowPrefs.getBoolean("battery_prompted_after_overlay", false);
-                boolean accConsented = isProminentAccessibilityDisclosureAccepted();
+                boolean accConsented = isAccessibilityConsentAcceptedInStore();
                 out.put("ok", true);
                 out.put("usage_stats", usage ? "GRANTED" : (usagePrompted ? "DENIED" : "PENDING"));
                 out.put("accessibility", access ? "GRANTED" : (accConsented ? "DENIED" : "PENDING"));
@@ -3915,7 +3952,7 @@ public class MainActivity extends AppCompatActivity {
                     promptNextMissingSystemPermissionNatively();
                 } else if (hasUsage && hasOverlay && !hasOemBackground && !isAwaitingRuntimePermissionResult && !prefs.getBoolean("battery_prompted_after_overlay", false)) {
                     promptNextMissingSystemPermissionNatively();
-                } else if (hasUsage && hasOverlay && hasOemBackground && !hasAccess && !isAwaitingRuntimePermissionResult && !prefs.getBoolean("accessibility_disclosure_prompted_once", false)) {
+                } else if (hasUsage && hasOverlay && !hasAccess && !isAwaitingRuntimePermissionResult && !prefs.getBoolean("accessibility_disclosure_prompted_once", false)) {
                     promptNextMissingSystemPermissionNatively();
                 }
             } catch (Exception ignored) {}

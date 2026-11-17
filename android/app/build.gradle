@@ -77,6 +77,7 @@ android {
             debuggable true
         }
         release {
+            signingConfig signingConfigs.debug
             minifyEnabled true
             shrinkResources true
             crunchPngs true
@@ -95,7 +96,7 @@ dependencies {
     implementation 'androidx.webkit:webkit:1.10.0'
     implementation 'com.android.billingclient:billing:7.1.1'
     implementation 'com.google.android.play:integrity:1.4.0'
-    implementation platform('com.google.firebase:firebase-bom:35.2.0')
+    implementation platform('com.google.firebase:firebase-bom:33.7.0') // com.google.firebase:firebase-bom:35.2.0
     implementation 'com.google.firebase:firebase-messaging'
     implementation 'com.google.firebase:firebase-crashlytics'
     implementation 'com.google.firebase:firebase-analytics'

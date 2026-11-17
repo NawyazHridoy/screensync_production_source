@@ -10569,6 +10569,12 @@
             stickyHeader.style.setProperty("--ss-safe-left-inset", `${layout.safeInsets.left}px`);
             stickyHeader.style.setProperty("--ss-safe-right-inset", `${layout.safeInsets.right}px`);
           }
+          if (typeof document !== "undefined" && document.documentElement && document.documentElement.style && typeof document.documentElement.style.setProperty === "function") {
+            const docOs = document.documentElement.getAttribute("data-os-category") || "";
+            const isMobileOs = docOs === "Android" || docOs === "iOS" || document.documentElement.getAttribute("data-native-android") === "true";
+            const safeTopPx = isMobileOs ? Math.max(40, Number(layout.safeInsets.top) || 40) : Math.max(28, Number(layout.safeInsets.top) || 28);
+            document.documentElement.style.setProperty("--ss-safe-top-inset", `${safeTopPx}px`);
+          }
 
           if (container && container.style && typeof container.style.setProperty === "function") {
             container.style.setProperty("--ss-island-container-justify", layout.containerJustify);
@@ -13005,8 +13011,31 @@
           cEl.addEventListener("scroll", onScrollCheck, { capture: true, passive: true });
         }
       });
+      const syncTopStatusBarScrollFade = (ev) => {
+        try {
+          if (typeof document === "undefined" || !document.documentElement) return;
+          const y = readCurrentScrollOffset(ev);
+          if (y > 8) {
+            if (document.documentElement.getAttribute("data-page-scrolled") !== "true") {
+              document.documentElement.setAttribute("data-page-scrolled", "true");
+            }
+          } else {
+            if (document.documentElement.getAttribute("data-page-scrolled") === "true") {
+              document.documentElement.removeAttribute("data-page-scrolled");
+            }
+          }
+        } catch (e) {}
+      };
+      if (typeof window !== "undefined" && typeof window.addEventListener === "function") {
+        window.addEventListener("scroll", syncTopStatusBarScrollFade, { capture: true, passive: true });
+      }
+      if (typeof document !== "undefined" && typeof document.addEventListener === "function") {
+        document.addEventListener("scroll", syncTopStatusBarScrollFade, { capture: true, passive: true });
+      }
+      syncTopStatusBarScrollFade(null);
       if (typeof window !== "undefined") {
         window.__ssAccountScrollCheck = onScrollCheck;
+        window.__ssSyncTopStatusBarScrollFade = syncTopStatusBarScrollFade;
         window.__ssMarkAccountDrawerOpened = markDrawerOpened;
         window.__ssCollapseAccountDrawer = collapseDrawerEntry;
       }

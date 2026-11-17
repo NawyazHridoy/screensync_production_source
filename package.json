@@ -1,7 +1,7 @@
 {
   "name": "screensync-healthy-device-usage",
   "version": "3.5.0",
-  "description": "ScreenSync — Healthy Device Usage & Cross-Device Reel Tracker (Supabase Auth + Cloud Sync + Cross-Platform Native & Local Bridge)",
+  "description": "ScreenSync \u2014 Healthy Device Usage & Cross-Device Reel Tracker (Supabase Auth + Cloud Sync + Cross-Platform Native & Local Bridge)",
   "main": "www/index.html",
   "scripts": {
     "start": "npx serve www -l 3000",
@@ -12,7 +12,7 @@
     "sync:web": "node scripts/sync-web-assets.js",
     "sync:server": "node server/sync_server.js",
     "test": "node tests/run_all_tests.js",
-    "android:sync": "node scripts/sync-web-assets.js && npx cap sync android",
+    "android:sync": "node build.js && node scripts/sync-web-assets.js",
     "android:open": "npx cap open android",
     "android:build:debug": "cd android && ./gradlew assembleDebug",
     "ios:sync": "node scripts/sync-web-assets.js && npx cap sync ios",
